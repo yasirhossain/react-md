@@ -11,7 +11,7 @@ const block = bem("toggle-theme");
 
 const ToggleThemeMenuItem: FC = () => {
   const { theme } = useTheme();
-  const { toggleTheme } = useThemeActions();
+  const { setTheme: toggleTheme } = useThemeActions();
   const isLight = theme === "light";
   let icon = <LightbulbOutlineSVGIcon />;
   if (isLight) {

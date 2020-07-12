@@ -1,7 +1,13 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import Cookie from "js-cookie";
 
-import { PrimaryColor, SecondaryColor, ColorAccent, ThemeMode } from "./colors";
+import {
+  PrimaryColor,
+  SecondaryColor,
+  ColorAccent,
+  ThemeMode,
+  toTheme,
+} from "./colors";
 import {
   Theme,
   DEFAULT_PRIMARY,
@@ -17,15 +23,15 @@ export type ThemeConfiguration = Theme & ThemeActions;
 const THEME_TRANSITION_DURATION = 150;
 
 export default function useThemeConfiguration(
-  defaultTheme: ThemeMode = "light"
+  defaultTheme: ThemeMode = "os"
 ): ThemeConfiguration {
   const [primary, setPrimary] = useState<PrimaryColor>(DEFAULT_PRIMARY);
   const [secondary, setSecondary] = useState<SecondaryColor>(DEFAULT_SECONDARY);
   const [accent, setAccent] = useState<ColorAccent>(DEFAULT_ACCENT);
   const [theme, setTheme] = useState<ThemeMode>(defaultTheme);
 
-  const toggleTheme = useCallback(() => {
-    setTheme((theme) => (theme === "dark" ? "light" : "dark"));
+  const updateTheme = useCallback((nextTheme: string) => {
+    setTheme(toTheme(nextTheme));
   }, []);
 
   const firstRender = useRef(true);
@@ -53,6 +59,11 @@ export default function useThemeConfiguration(
 
     Cookie.set("theme", theme);
     localStorage.setItem("theme", theme);
+    if (theme === "os") {
+      root.classList.remove("light-theme", "dark-theme");
+      return;
+    }
+
     root.classList.add(styles.transition);
     // force dom repaint
     root.scrollTop; // eslint-disable-line no-unused-expressions
@@ -93,7 +104,7 @@ export default function useThemeConfiguration(
       }
     }, []),
     theme,
-    toggleTheme,
+    setTheme: updateTheme,
     reset,
   };
 }

@@ -5,14 +5,14 @@ import { PrimaryColor, SecondaryColor, ColorAccent } from "./colors";
 export type SetPrimary = (color: PrimaryColor) => void;
 export type SetSecondary = (color: SecondaryColor) => void;
 export type SetAccent = (accent: ColorAccent | string) => void;
-export type ToggleTheme = () => void;
+export type SetTheme = (nextTheme: string) => void;
 export type ResetTheme = () => void;
 
 export interface ThemeActions {
   setPrimary: SetPrimary;
   setSecondary: SetSecondary;
   setAccent: SetAccent;
-  toggleTheme: ToggleTheme;
+  setTheme: SetTheme;
   reset: ResetTheme;
 }
 
@@ -21,7 +21,7 @@ export const ThemeActionsContext = createContext<ThemeActions>({
   setPrimary: noop,
   setSecondary: noop,
   setAccent: noop,
-  toggleTheme: noop,
+  setTheme: noop,
   reset: noop,
 });
 

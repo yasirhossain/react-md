@@ -4,7 +4,7 @@ const colors = Object.keys(scssVariables).filter(
   (name) => !name.startsWith("rmd-theme")
 );
 
-export type ThemeMode = "light" | "dark";
+export type ThemeMode = "light" | "dark" | "os";
 
 /**
  * All the available primary color names.
@@ -30,3 +30,11 @@ export type SecondaryColor = typeof secondaries[number];
 export const accents = [100, 200, 400, 700];
 
 export type ColorAccent = typeof accents[number];
+
+export function toTheme(theme: string | undefined): ThemeMode {
+  if (theme !== "os" && theme !== "light" && theme !== "dark") {
+    return "os";
+  }
+
+  return theme;
+}

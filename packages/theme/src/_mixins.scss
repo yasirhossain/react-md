@@ -53,15 +53,39 @@
 /// This mixin should normally be used with the `rmd-elevation` mixin to change
 /// the background color based on the current elevation in dark themes.
 ///
+/// @example scss - Enabling Dark Elevation with `prefers-color-scheme` media
+///   $rmd-theme-dark-class: null;
+///   $rmd-theme-prefers-color-scheme: true;
+///   $rmd-theme-dark-elevation: true;
+///
+///   .my-element {
+///     @include rmd-elevation(4);
+///     @include rmd-theme-dark-elevation(4);
+///   }
+///
 /// @since 2.1.0
 /// @param {Number} z-value - This should be a number between 0 and 24
 /// representing the current elevation.
 /// @param {Boolean} css-modules [false] - Boolean if this is being used within
 /// CSS Modules which will update the selector to work correctly by wrapping
 /// different parts with `:global` and `:local`.
-@mixin rmd-theme-dark-elevation($z-value, $css-modules: false) {
-  @if $rmd-theme-dark-elevation {
-    @if $rmd-theme-dark-class == 'prefers-color-scheme' {
+/// @param {Boolean} prefers-color-scheme [$rmd-theme-prefers-color-scheme] -
+/// Boolean if the dark elevation should be enabled automatically if the user
+/// has their OS preference set to `dark`.
+/// @param {String} dark-class [$rmd-theme-dark-class] - An optional class name
+/// that must exist on a parent element (normally the `<html>`) before the dark
+/// elevation can be enabled.
+/// @param {Boolean} enabled [$rmd-theme-dark-elevation] - Boolean if this
+/// functionality should be enabled at all.
+@mixin rmd-theme-dark-elevation(
+  $z-value,
+  $css-modules: false,
+  $prefers-color-scheme: $rmd-theme-prefers-color-scheme,
+  $dark-class: $rmd-theme-dark-class,
+  $enabled: $rmd-theme-dark-elevation
+) {
+  @if $enabled {
+    @if $prefers-color-scheme {
       @media (prefers-color-scheme: dark) {
         & {
           @include rmd-theme-update-var(
@@ -71,8 +95,10 @@
           @include rmd-theme(background-color, background);
         }
       }
-    } @else {
-      @include rmd-utils-optional-css-modules($rmd-theme-dark-class, $css-modules) {
+    }
+
+    @if $dark-class {
+      @include rmd-utils-optional-css-modules($dark-class, $css-modules) {
         @include rmd-theme-update-var(
           background,
           map-get($rmd-theme-dark-elevation-colors, $z-value)
@@ -134,6 +160,12 @@
     @include rmd-chip-theme-update-var(outline-color, $rmd-chip-outline-light-color);
   }
 
+  @if $rmd-theme-prefers-color-scheme and mixin-exists(rmd-dialog-theme) {
+    .rmd-dialog {
+      @include rmd-theme-update-var(background, $rmd-theme-light-surface);
+    }
+  }
+
   @if mixin-exists(rmd-divider-theme-update-var) {
     @include rmd-divider-theme-update-var(background-color, $rmd-divider-background-color-on-light);
   }
@@ -148,6 +180,12 @@
       text-filled-color,
       $rmd-text-field-filled-light-background-color
     );
+  }
+
+  @if $rmd-theme-prefers-color-scheme and mixin-exists(rmd-menu-theme) {
+    .rmd-menu {
+      @include rmd-theme-update-var(background, $rmd-theme-light-surface);
+    }
   }
 
   @if mixin-exists(rmd-states-theme-update-var) {
@@ -228,6 +266,12 @@
     @include rmd-chip-theme-update-var(outline-color, $rmd-chip-outline-dark-color);
   }
 
+  @if $rmd-theme-prefers-color-scheme and mixin-exists(rmd-dialog-theme) {
+    .rmd-dialog {
+      @include rmd-theme-update-var(background, $rmd-theme-dark-surface);
+    }
+  }
+
   @if mixin-exists(rmd-divider-theme-update-var) {
     @include rmd-divider-theme-update-var(background-color, $rmd-divider-background-color-on-dark);
   }
@@ -242,6 +286,12 @@
       text-filled-color,
       $rmd-text-field-filled-dark-background-color
     );
+  }
+
+  @if $rmd-theme-prefers-color-scheme and mixin-exists(rmd-menu-theme) {
+    .rmd-menu {
+      @include rmd-theme-update-var(background, $rmd-theme-dark-surface);
+    }
   }
 
   @if mixin-exists(rmd-states-theme-update-var) {
@@ -261,6 +311,56 @@
   }
 }
 
+/// This mixin is used to allow a user that has their OS specificity set the
+/// light or dark theme to also work within your website. If you have
+/// `$rmd-theme-light: true`, it will add a media query for users that have set
+/// their preference to dark to also add the dark theme. Having
+/// `$rmd-theme-light: false` will do the reverse and add a media query for
+/// users that have set their preference to light to also use the light theme.
+///
+/// @since 2.1.0
+/// @param {String} selector [':root'] - The selector that should be used within
+/// the media query to apply the light or dark theme.
+@mixin rmd-theme-prefers-color-scheme-theme($selector: ':root') {
+  @media (prefers-color-scheme: #{if($rmd-theme-light, dark, light)}) {
+    #{$selector} {
+      @if $rmd-theme-light {
+        @include rmd-theme-dark;
+      } @else {
+        @include rmd-theme-light;
+      }
+    }
+  }
+}
+
+@mixin rmd-theme-light-or-dark {
+  @if $rmd-theme-prefers-color-scheme {
+    @include rmd-theme-prefers-color-scheme-theme;
+  }
+
+  @if $rmd-theme-light-class {
+    // :root has a higher specificity than a single class, so have to increase
+    // the specificity by repeating the class name
+    $selector: $rmd-theme-light-class +
+      if($rmd-theme-prefers-color-scheme, $rmd-theme-light-class, '');
+
+    #{$selector} {
+      @include rmd-theme-light;
+    }
+  }
+
+  @if $rmd-theme-dark-class {
+    // :root has a higher specificity than a single class, so have to increase
+    // the specificity by repeating the class name
+    $selector: $rmd-theme-dark-class +
+      if($rmd-theme-prefers-color-scheme, $rmd-theme-dark-class, '');
+
+    #{$selector} {
+      @include rmd-theme-dark;
+    }
+  }
+}
+
 /// Creates all the styles for a theme in react-md. This will start by creating CSS Variables
 /// for each theme variable and then create class names for each variable.
 ///
@@ -272,4 +372,5 @@
 ///   @include react-md-theme;
 @mixin react-md-theme {
   @include rmd-theme-create-root-theme($rmd-theme-values, theme);
+  @include rmd-theme-light-or-dark;
 }

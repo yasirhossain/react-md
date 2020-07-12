@@ -2,6 +2,9 @@
 
 $rmd-theme-primary: $rmd-teal-500;
 $rmd-theme-secondary: $rmd-pink-a-200;
+$rmd-theme-light-class: '.light-theme';
+$rmd-theme-dark-class: '.dark-theme';
+$rmd-theme-prefers-color-scheme: true;
 $rmd-theme-dark-elevation: true;
 $rmd-utils-auto-dense: true;
 

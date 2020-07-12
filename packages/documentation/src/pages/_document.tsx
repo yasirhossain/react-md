@@ -10,7 +10,7 @@ import Document, {
 import Cookie from "js-cookie";
 
 import Analytics from "components/Analytics";
-import { ThemeMode } from "components/Theme";
+import { ThemeMode, toTheme } from "components/Theme";
 
 interface MyDocumentProps {
   theme: ThemeMode;
@@ -21,23 +21,27 @@ export default class MyDocument extends Document<MyDocumentProps> {
     ctx: DocumentContext
   ): Promise<DocumentInitialProps & MyDocumentProps> {
     const initialProps = await Document.getInitialProps(ctx);
-    let theme = "light";
+    let theme: ThemeMode = "os";
     if (ctx && ctx.req) {
-      ({ theme = "light" } = ctx.req.cookies);
+      theme = toTheme(ctx.req.cookies.theme ?? "os");
     } else if (typeof window !== "undefined") {
-      theme = Cookie.get("theme") || "light";
+      theme = toTheme(Cookie.get("theme") || "os");
     }
 
     return {
       ...initialProps,
-      theme: theme === "dark" ? "dark" : "light",
+      theme,
     };
   }
 
   public render(): ReactElement {
     const { theme } = this.props;
     return (
-      <html lang="en" dir="ltr" className={`${theme}-theme`}>
+      <html
+        lang="en"
+        dir="ltr"
+        className={theme === "os" ? undefined : `${theme}-theme`}
+      >
         <Head>
           <meta
             name="viewport"

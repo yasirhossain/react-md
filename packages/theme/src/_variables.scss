@@ -153,17 +153,29 @@ $rmd-theme-dark-background: if($rmd-theme-dark-elevation, #121212, #303030) !def
 /// @type Color
 $rmd-theme-dark-surface: $rmd-grey-800 !default;
 
-/// The class name that gets applied to the root `<html>` element if your app
-/// switches between dark and light themes. This is really only used for the
-/// changing the background color based on elevation when the app is in dark
-/// mode and the `$rmd-theme-dark-elevation` boolean is enabled.
+/// Feature flag for if the theme should automatically update based on the
+/// user's OS settings for light and dark themes. This will be used in the
+/// `@mixin rmd-theme-prefers-color-scheme` and will update the theme as needed.
 ///
-/// If this is set to `prefers-color-scheme`, the dark elevation styles will
-/// only be applied when the `@media (prefers-color-scheme: dark)`.
+/// @since 2.1.0
+/// @type Boolean
+$rmd-theme-prefers-color-scheme: false !default;
+
+/// The class name that gets applied to the root `<html>` element if your app
+/// switches between dark and light themes. This should be set to a string like
+/// `'.light-theme'` if this functionality should be enabled.
 ///
 /// @since 2.1.0
 /// @type String
-$rmd-theme-dark-class: '.dark-theme' !default;
+$rmd-theme-light-class: null !default;
+
+/// The class name that gets applied to the root `<html>` element if your app
+/// switches between dark and light themes. This should be set to a string like
+/// `'.dark-theme'` if this functionality should be enabled.
+///
+/// @since 2.1.0
+/// @type String
+$rmd-theme-dark-class: null !default;
 
 /// The theme's background color.
 /// @type Color

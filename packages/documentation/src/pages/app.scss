@@ -2,20 +2,37 @@
 
 @include react-md-utils;
 
-// sass-lint:disable no-duplicate-properties
-:root {
-  #{--code-bg}: #{$code-light-theme-bg};
-  #{--sass-bg}: #{$rmd-grey-200};
-  #{--sass-border}: #{$rmd-grey-400};
+@mixin theme-colors($light) {
+  // sass-lint:disable no-duplicate-properties
+  #{--code-bg}: #{if($light, $code-light-theme-bg, $code-dark-theme-bg)};
+  #{--sass-bg}: #{if($light, $rmd-grey-200, rgba($rmd-black-base, 0.42))};
+  #{--sass-border}: #{if($light, $rmd-grey-400, rgba($rmd-black-base, 0.87))};
 }
 
-.dark-theme {
-  @include rmd-theme-dark;
+@mixin all-theme-colors($light) {
+  $type: if($light, light, dark);
 
-  #{--code-bg}: #{$code-dark-theme-bg};
-  #{--sass-bg}: #{rgba($rmd-black-base, 0.42)};
-  #{--sass-border}: #{rgba($rmd-black-base, 0.87)};
+  // The documentation website will default to using the prefers-color-scheme
+  // media query for detecting light/dark theme but the user can still
+  // manually set the light or dark theme themselves. Just using the
+  // `.light-theme` or `.dark-theme` class won't work since `:root` has a
+  // higher specificity than a single class so we can increase the specificity
+  // by saying `.light-theme.light-theme` or `.dark-theme.dark-theme`
+  $class-name: if($light, $rmd-theme-light-class, $rmd-theme-dark-class);
+
+  #{$class-name + $class-name} {
+    @include theme-colors($light);
+  }
+
+  @media (prefers-color-scheme: #{$type}) {
+    :root {
+      @include theme-colors($light);
+    }
+  }
 }
+
+@include all-theme-colors(true);
+@include all-theme-colors(false);
 
 .iframe {
   border: 0;

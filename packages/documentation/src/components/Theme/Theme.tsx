@@ -18,7 +18,7 @@ const Theme: FC<ThemeProps> = ({ defaultTheme = "light", children }) => {
     setPrimary,
     setSecondary,
     setAccent,
-    toggleTheme,
+    setTheme,
     reset,
   } = useThemeConfiguration(defaultTheme);
 
@@ -36,10 +36,10 @@ const Theme: FC<ThemeProps> = ({ defaultTheme = "light", children }) => {
       setPrimary,
       setSecondary,
       setAccent,
-      toggleTheme,
+      setTheme,
       reset,
     }),
-    [reset, setAccent, setPrimary, setSecondary, toggleTheme]
+    [reset, setAccent, setPrimary, setSecondary, setTheme]
   );
 
   return (

@@ -18,7 +18,7 @@ import {
 import { GA_CODE } from "constants/github";
 import Layout from "components/Layout";
 import GoogleFont from "components/GoogleFont";
-import Theme, { ThemeMode } from "components/Theme";
+import Theme, { ThemeMode, toTheme } from "components/Theme";
 import { toBreadcrumbPageTitle } from "utils/toTitle";
 import { qsToString } from "utils/routes";
 
@@ -66,7 +66,7 @@ export default class App extends NextApp<AppProps> {
     }
 
     let defaultSize;
-    let defaultTheme;
+    let defaultTheme: ThemeMode = "os";
     if (ctx && ctx.req) {
       const { req } = ctx;
       const md = new MobileDetect(req.headers["user-agent"] || "");
@@ -81,7 +81,7 @@ export default class App extends NextApp<AppProps> {
         isLargeDesktop,
         isLandscape: true,
       };
-      defaultTheme = req.cookies.theme || "light";
+      defaultTheme = toTheme(req.cookies.theme);
     } else if (typeof window !== "undefined") {
       const matchesPhone = window.matchMedia(
         `screen and (max-width: ${DEFAULT_PHONE_MAX_WIDTH})`
@@ -106,13 +106,13 @@ export default class App extends NextApp<AppProps> {
         isLargeDesktop,
         isLandscape,
       };
-      defaultTheme = Cookie.get("theme");
+      defaultTheme = toTheme(Cookie.get("theme"));
     }
 
     return {
       pageProps,
       defaultSize: defaultSize || DEFAULT_APP_SIZE,
-      defaultTheme: defaultTheme === "dark" ? "dark" : "light",
+      defaultTheme,
     };
   }
 

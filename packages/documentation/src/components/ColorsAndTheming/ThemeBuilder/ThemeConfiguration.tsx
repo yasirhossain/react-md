@@ -66,7 +66,7 @@ const ThemeConfiguration: FC<ThemeConfigurationProps> = ({
     setPrimary,
     setSecondary,
     setAccent,
-    toggleTheme,
+    setTheme: toggleTheme,
     reset,
   } = useThemeActions();
 
