@@ -11,9 +11,10 @@ packages/*/*.tsbuildinfo
 /packages/*/dist
 /packages/*/types
 /packages/dev-utils/bin
-/packages/material-icons/bin
-/packages/material-icons/temp
 !/packages/documentation/types
+
+# Temp folders from dev-utils scripts
+/material-icons-temp
 
 # Testing
 coverage

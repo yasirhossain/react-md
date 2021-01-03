@@ -7,6 +7,7 @@ import { changelogs } from "./changelogs";
 import { clean } from "./clean";
 import { configs } from "./configs";
 import { CLEAN, DEBUG, SILENT } from "./constants";
+import { icons } from "./icons";
 import { indexer } from "./indexer";
 import { libsize } from "./libsize";
 import { release, RELEASE_TYPES, toReleaseType } from "./release";
@@ -177,6 +178,29 @@ createCommand("umd")
     "Compiles the UMD bundles for `react-md`. This really shouldn't be used as it's handled by the `release` script automatically."
   )
   .action(() => umd());
+
+createCommand("icons")
+  .option(
+    "--no-clean",
+    "Disables automatically cleaning the `.zip` file and the temp folder " +
+      "when the script has completed successfully."
+  )
+  .option(
+    "--no-commit",
+    "Disables committing the changed files in the material-icons package"
+  )
+  .option(
+    "--no-download",
+    "Disables re-downloading the latest archive from GitHub. This should " +
+      "only be enabled if generating the icons failed somehow."
+  )
+  .description(
+    "Generates all the icon components for the `@react-md/material-icons` package " +
+      "by pulling down the https://github.com/google/material-design-icons repo."
+  )
+  .action(({ clean = true, commit = true, download = true }) =>
+    icons({ clean, commit, download })
+  );
 
 createCommand("watch")
   .option(

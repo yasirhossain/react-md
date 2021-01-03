@@ -1,4 +1,5 @@
 export * from "./clean";
+export * from "./cleanEnsureDir";
 export * from "./copy";
 export * from "./format";
 export * from "./git";
