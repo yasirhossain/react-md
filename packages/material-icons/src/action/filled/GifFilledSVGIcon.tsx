@@ -1,0 +1,26 @@
+/**
+ * This file was generated from @react-md/dev-utils and should not be updated
+ * manually.
+ */
+
+import React, { forwardRef } from "react";
+import { SVGIcon, SVGIconProps } from "@react-md/icon";
+
+export const GifFilledSVGIcon = forwardRef<SVGSVGElement, SVGIconProps>(
+  function GifFilledSVGIcon(props, ref) {
+    return (
+      <SVGIcon {...props} ref={ref}>
+        <g>
+          <rect fill="none" height="24" width="24" x="0" />
+        </g>
+        <g>
+          <g>
+            <rect height="6" width="1.5" x="11.5" y="9" />
+            <path d="M9,9H6c-0.6,0-1,0.5-1,1v4c0,0.5,0.4,1,1,1h3c0.6,0,1-0.5,1-1v-2H8.5v1.5h-2v-3H10V10C10,9.5,9.6,9,9,9z" />
+            <polygon points="19,10.5 19,9 14.5,9 14.5,15 16,15 16,13 18,13 18,11.5 16,11.5 16,10.5" />
+          </g>
+        </g>
+      </SVGIcon>
+    );
+  }
+);

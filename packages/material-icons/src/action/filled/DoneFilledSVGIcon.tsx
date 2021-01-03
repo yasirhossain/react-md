@@ -1,0 +1,18 @@
+/**
+ * This file was generated from @react-md/dev-utils and should not be updated
+ * manually.
+ */
+
+import React, { forwardRef } from "react";
+import { SVGIcon, SVGIconProps } from "@react-md/icon";
+
+export const DoneFilledSVGIcon = forwardRef<SVGSVGElement, SVGIconProps>(
+  function DoneFilledSVGIcon(props, ref) {
+    return (
+      <SVGIcon {...props} ref={ref}>
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" />
+      </SVGIcon>
+    );
+  }
+);

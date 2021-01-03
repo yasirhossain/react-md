@@ -1,0 +1,18 @@
+/**
+ * This file was generated from @react-md/dev-utils and should not be updated
+ * manually.
+ */
+
+import React, { forwardRef } from "react";
+import { FontIcon, FontIconProps } from "@react-md/icon";
+
+export const Undefined5GRoundedFontIcon = forwardRef<
+  HTMLElement,
+  FontIconProps
+>(function Undefined5GRoundedFontIcon(props, ref) {
+  return (
+    <FontIcon {...props} ref={ref}>
+      5g
+    </FontIcon>
+  );
+});

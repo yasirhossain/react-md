@@ -1,0 +1,21 @@
+/**
+ * This file was generated from @react-md/dev-utils and should not be updated
+ * manually.
+ */
+
+import React, { forwardRef } from "react";
+import { SVGIcon, SVGIconProps } from "@react-md/icon";
+
+export const RepeatOnFilledSVGIcon = forwardRef<SVGSVGElement, SVGIconProps>(
+  function RepeatOnFilledSVGIcon(props, ref) {
+    return (
+      <SVGIcon {...props} ref={ref}>
+        <path d="M0 0h24v24H0V0z" fill="none" />
+        <path
+          d="M21 1H3c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zM7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"
+          fill-rule="evenodd"
+        />
+      </SVGIcon>
+    );
+  }
+);
