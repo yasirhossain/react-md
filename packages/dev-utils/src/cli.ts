@@ -6,6 +6,7 @@ import loglevel from "loglevel";
 import { clean } from "./clean";
 import { configs } from "./configs";
 import { CLEAN, DEBUG, SILENT } from "./constants";
+import { examples } from "./examples";
 import { indexer } from "./indexer";
 import { libsize } from "./libsize";
 import { release, RELEASE_TYPES, toReleaseType } from "./release";
@@ -181,6 +182,11 @@ createCommand("libsize")
         // .action only allows Promise<void> or void
       })
   );
+createCommand("examples")
+  .description(
+    "Re-creates the `packages/documentation/src/constants/examples.ts` file"
+  )
+  .action(() => examples());
 
 createCommand("themes")
   .description(

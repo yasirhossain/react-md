@@ -33,6 +33,12 @@ module.exports = {
       },
     },
     {
+      files: ['packages/documentation/src/examples/*/examples.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 0,
+      },
+    },
+    {
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
         '@typescript-eslint/prefer-reduce-type-parameter': 0,

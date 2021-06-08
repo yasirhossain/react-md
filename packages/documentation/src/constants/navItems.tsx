@@ -76,6 +76,8 @@ const getPackageRoutes = (name: string): readonly RouteNavItem[] => {
   return routes;
 };
 
+const components = ["autocomplete", "badge", "button"];
+
 const routes: readonly NavItem[] = [
   {
     href: "/",
@@ -170,6 +172,15 @@ const routes: readonly NavItem[] = [
         children: "Creating Dynamic Themes",
       },
     ],
+  },
+  {
+    href: "/components",
+    children: "Components",
+    leftAddon: <BuildSVGIcon />,
+    routes: components.map((name) => ({
+      href: `/${name}`,
+      children: toTitle(name),
+    })),
   },
   {
     href: "/packages",
