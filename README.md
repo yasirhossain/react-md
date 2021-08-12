@@ -8,19 +8,19 @@
 Create an accessible React application with the
 [material design specifications](https://material.io/design/) and Scss.
 
-- [Installing packages](https://react-md.dev/guides/installation) - How to
+- [Installing packages](https://v2.react-md.dev/guides/installation) - How to
   install related components and packages within react-md for building your
   application
-- [Creating a new app](https://react-md.dev/guides/creating-a-new-app) - How to
-  create a new app with react-md
+- [Creating a new app](https://v2.react-md.dev/guides/creating-a-new-app) - How
+  to create a new app with react-md
 - [Examples with Build Tools](./examples) - View and download examples of using
   ReactMD with build tools such as [create-react-app], [Next.js], and [Gatsby]
-- [Working from v1](https://react-md.dev/guides/working-with-v1) - How to use
+- [Working from v1](https://v2.react-md.dev/guides/working-with-v1) - How to use
   migrate from v1 of `react-md` to v2.
-- [Customizing your theme](https://react-md.dev/guides/customizing-your-theme) -
+- [Customizing your theme](https://v2.react-md.dev/guides/customizing-your-theme) -
   How to implement a different theme for your React application
-- [Full documentation](https://react-md.dev) - All the remaining documentation
-  along with every single guide, API Reference, and examples
+- [Full documentation](https://v2.react-md.dev) - All the remaining
+  documentation along with every single guide, API Reference, and examples
 - [Library Size](#library-size) - The UMD bundle size for the entire `react-md`
   library and sizes for some of the pre-built css files.
 
@@ -36,7 +36,7 @@ Create an accessible React application with the
 - Out of the box dark theme mode support
 - Out of the box left-to-right and right-to-left language support
 - UMD Bundles and pre-compiled css available on https://unpkg.com (see more
-  information [here](https://react-md.dev/guides/cdn-links))
+  information [here](https://v2.react-md.dev/guides/cdn-links))
 - Written and maintained in [Typescript]
 
 ## Creating a new project
@@ -175,7 +175,7 @@ export default App;
 ```
 
 More information can be found on the documentation site's page
-[about creating projects](https://react-md.dev/guides/installation)
+[about creating projects](https://v2.react-md.dev/guides/installation)
 
 ## Library Size
 
