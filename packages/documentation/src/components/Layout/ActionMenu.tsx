@@ -31,6 +31,7 @@ export default function ActionMenu(): ReactElement {
         <ToggleTheme as="menuitem" />,
         <ToggleRTL as="menuitem" />,
         <CodePreferenceToggle as="menuitem" />,
+        <VersionMenuItem version="v3" />,
         <VersionMenuItem version="v2" />,
         <VersionMenuItem version="v1" />,
         <GithubLink as="menuitem" />,

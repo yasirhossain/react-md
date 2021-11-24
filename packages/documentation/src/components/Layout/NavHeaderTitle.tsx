@@ -18,6 +18,7 @@ export default function NavHeaderTitle(): ReactElement {
       <DropdownMenu
         id="version-picker"
         items={[
+          <VersionMenuItem small version="v3" />,
           <VersionMenuItem small version="v2" />,
           <VersionMenuItem small version="v1" />,
         ]}
