@@ -12,7 +12,7 @@ import ToggleTheme from "./ToggleTheme";
 import ToggleRTL from "./ToggleRTL";
 import GithubLink from "./GithubLink";
 import TableOfContentsMenuItem from "./TableOfContentsMenuItem";
-import VersionMenuItem from "./VersionMenuItem";
+import PreviousDocsMenuItems from "./PreviousDocsMenuItems";
 
 const margin = unitToNumber(scssVariables["rmd-app-bar-lr-margin"]);
 const options = {
@@ -31,9 +31,7 @@ export default function ActionMenu(): ReactElement {
         <ToggleTheme as="menuitem" />,
         <ToggleRTL as="menuitem" />,
         <CodePreferenceToggle as="menuitem" />,
-        <VersionMenuItem version="v3" />,
-        <VersionMenuItem version="v2" />,
-        <VersionMenuItem version="v1" />,
+        <PreviousDocsMenuItems />,
         <GithubLink as="menuitem" />,
         <TableOfContentsMenuItem />,
       ]}
