@@ -43,7 +43,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
-    "@react-md/dev-utils": "^5.0.0",
     "@types/formidable": "^2.0.4",
     "@types/gtag.js": "^0.0.8",
     "@types/js-cookie": "^3.0.1",

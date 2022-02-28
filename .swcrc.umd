@@ -1,0 +1,27 @@
+{
+  "sourceMaps": true,
+  "exclude": [".*__tests__"],
+  "env": {
+    "path": "."
+  },
+  "module": {
+    "type": "umd",
+    "globals": {
+      "react": "React",
+      "react-dom": "ReactDOM"
+    }
+  },
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "decorators": false,
+      "dynamicImport": false
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  }
+}

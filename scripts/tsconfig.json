@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "sourceMap": true,
-    "jsx": "react-jsx",
-    "strict": true,
     "noEmit": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
@@ -14,6 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "esnext"]
-  }
+    "lib": ["esnext"]
+  },
+  "include": ["**/*.ts"]
 }
