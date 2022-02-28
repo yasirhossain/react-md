@@ -2,9 +2,9 @@ import type { HTMLAttributes } from "react";
 import { Children, cloneElement, forwardRef, isValidElement } from "react";
 import cn from "classnames";
 
-import { bem } from "../bem";
 import { useAppSize } from "../sizing/useAppSize";
 import { GridCell } from "./GridCell";
+import { gridClassName } from "./styles";
 
 /**
  * This CSS Variable allows you to override the number of columns that should be
@@ -24,6 +24,9 @@ export const GRID_COLUMNS_VAR = "--rmd-grid-cols";
  */
 export const GRID_GUTTER_VAR = "--rmd-grid-gutter";
 
+/**
+ * @remarks \@since REPLACE_VERSION Added missing default value annotations.
+ */
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Boolean if the `children` should have the grid `style` and `className`
@@ -33,6 +36,7 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
    * Note: if this prop is provided, all of the `HTMLAttributes` props will be
    * ignored as well as the `clone` and `wrapOnly` props.
    *
+   * @defaultValue `false`
    * @remarks \@since 2.3.0
    */
   cloneStyles?: boolean;
@@ -42,6 +46,8 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
    * component and clone the `className` into each child automatically. This is
    * really just a convenience prop so you don't always need to import both the
    * `Grid` and `GridCell` components to create a grid.
+   *
+   * @defaultValue `false`
    */
   clone?: boolean;
 
@@ -49,6 +55,8 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
    * Boolean if the `children` should be updated to be wrapped in the `GridCell`
    * component.  This is really just a convenience prop so you don't always need
    * to import both the `Grid` and `GridCell` components to create a grid/
+   *
+   * @defaultValue `false`
    */
   wrapOnly?: boolean;
 
@@ -120,8 +128,6 @@ type CSSProperties = React.CSSProperties & {
   [GRID_COLUMNS_VAR]?: number;
 };
 
-const block = bem("rmd-grid");
-
 /**
  * The grid component is generally used for a base layout in your app to provide
  * nice padding and spacing between each item.
@@ -165,7 +171,10 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(function Grid(
       columns,
     [GRID_GUTTER_VAR]: gutter,
   };
-  const mergedClassName = cn(block({ "no-padding": padding === 0 }), className);
+  const mergedClassName = gridClassName(
+    { disablePadding: padding === 0 },
+    className
+  );
 
   if (cloneStyles && isValidElement(children)) {
     const child = Children.only(children);

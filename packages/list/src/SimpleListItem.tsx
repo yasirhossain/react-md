@@ -1,13 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/role-supports-aria-props */
 import { forwardRef } from "react";
-import cn from "classnames";
-import { bem } from "@react-md/utils";
 
-import type { SimpleListItemProps } from "./getListItemHeight";
 import { getListItemHeight } from "./getListItemHeight";
 import { ListItemChildren } from "./ListItemChildren";
-
-const block = bem("rmd-list-item");
+import { listItemClassName } from "./styles";
+import type { SimpleListItemProps } from "./types";
 
 /**
  * The `SimpleListItem` component is used to create a non-clickable item within
@@ -62,15 +59,14 @@ export const SimpleListItem = forwardRef<HTMLLIElement, SimpleListItemProps>(
         {...props}
         aria-disabled={isDisabled || undefined}
         ref={ref}
-        className={cn(
-          block({
-            [height]: height !== "auto" && height !== "normal",
-            "three-lines": threeLines,
+        className={listItemClassName(
+          {
+            height,
+            threeLines,
             clickable,
             disabled: isDisabled,
-            "disabled-color": isDisabled && !disabledOpacity,
-            "disabled-opacity": isDisabled && disabledOpacity,
-          }),
+            disabledOpacity,
+          },
           className
         )}
         onClick={isDisabled ? undefined : onClick}

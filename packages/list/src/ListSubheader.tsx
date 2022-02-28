@@ -1,17 +1,16 @@
 import type { HTMLAttributes } from "react";
 import { forwardRef } from "react";
-import cn from "classnames";
-import { bem } from "@react-md/utils";
 
-export interface ListSubheaderProps extends HTMLAttributes<HTMLLIElement> {
-  /**
-   * Boolean if the subheader should be inset to match the `ListItem` text
-   * keyline.
-   */
-  inset?: boolean;
-}
+import { listSubheaderClassName } from "./styles";
+import type { ListSubheaderClassNameOptions } from "./types";
 
-const block = bem("rmd-list-subheader");
+/**
+ * @remarks \@since REPLACE_VERSION Extends the {@link ListSubheaderClassNameOptions}
+ * interface and added missing default value annotations.
+ */
+export interface ListSubheaderProps
+  extends HTMLAttributes<HTMLLIElement>,
+    ListSubheaderClassNameOptions {}
 
 /**
  * This is a simple component that will render a `<li>` with the subheader
@@ -21,7 +20,11 @@ const block = bem("rmd-list-subheader");
 export const ListSubheader = forwardRef<HTMLLIElement, ListSubheaderProps>(
   function ListSubheader({ className, inset = false, ...props }, ref) {
     return (
-      <li {...props} ref={ref} className={cn(block({ inset }), className)} />
+      <li
+        {...props}
+        ref={ref}
+        className={listSubheaderClassName({ inset }, className)}
+      />
     );
   }
 );

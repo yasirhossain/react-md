@@ -2,31 +2,32 @@ import type { HTMLAttributes } from "react";
 import { Children, cloneElement, forwardRef, isValidElement } from "react";
 import cn from "classnames";
 
-import { bem } from "../bem";
+import type { GridListCellClassNameOptions } from "./styles";
+import { gridListCellClassName } from "./styles";
 
-export interface GridListCellProps extends HTMLAttributes<HTMLDivElement> {
+/**
+ * @remarks \@since REPLACE_VERSION Extends the {@link GridListCellClassNameOptions}
+ * interface ad added missing default value annotations.
+ */
+export interface GridListCellProps
+  extends HTMLAttributes<HTMLDivElement>,
+    GridListCellClassNameOptions {
   /**
    * Boolean if the className should be cloned into the child instead of
    * wrapping in another div. This will only work if the `children` is a single
    * ReactElement.
+   *
+   * @defaultValue `false`
    */
   clone?: boolean;
-
-  /**
-   * Boolean if the cell should be square by also setting the current cell size
-   * to the `height`.
-   */
-  square?: boolean;
 }
-
-const block = bem("rmd-grid-list");
 
 export const GridListCell = forwardRef<HTMLDivElement, GridListCellProps>(
   function GridListCell(
     { className, children, square = false, clone = false, ...props },
     ref
   ) {
-    const cellClassName = cn(block("cell", { square }), className);
+    const cellClassName = gridListCellClassName({ square }, className);
     if (clone && isValidElement(children)) {
       const child = Children.only(children);
       return cloneElement(child, {

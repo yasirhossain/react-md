@@ -1,6 +1,5 @@
 import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import { forwardRef } from "react";
-import cn from "classnames";
 import type { RenderConditionalPortalProps } from "@react-md/portal";
 import { ConditionalPortal } from "@react-md/portal";
 import type {
@@ -9,25 +8,28 @@ import type {
   TransitionTimeout,
 } from "@react-md/transition";
 import { useCSSTransition } from "@react-md/transition";
-import type { SimplePosition } from "@react-md/utils";
-import { bem } from "@react-md/utils";
 
 import {
   DEFAULT_TOOLTIP_CLASSNAMES,
   DEFAULT_TOOLTIP_POSITION,
   DEFAULT_TOOLTIP_TIMEOUT,
 } from "./constants";
+import type { TooltipClassNameOptions } from "./styles";
+import { tooltipClasses } from "./styles";
 
 /**
  * The base props for the `Tooltip` component. This can be extended when
  * creating custom tooltip implementations.
  *
  * @remarks \@since 2.8.0 Supports the {@link RenderConditionalPortalProps}
+ * @remarks \@since REPLACE_VERSION Extends the {@link TooltipClassNameOptions} interface
+ * and added missing default value annotations.
  */
 export interface TooltipProps
   extends HTMLAttributes<HTMLSpanElement>,
     RenderConditionalPortalProps,
-    CSSTransitionComponentProps {
+    CSSTransitionComponentProps,
+    TooltipClassNameOptions {
   /**
    * An id for the tooltip. This is required for accessibility and finding an
    * element to attach event listeners to show and hide the tooltip.
@@ -55,26 +57,11 @@ export interface TooltipProps
   children?: ReactNode;
 
   /**
-   * Boolean if the tooltip is using the dense spec. This will reduce the
-   * padding, margin and font size for the tooltip and is usually used for
-   * desktop displays.
-   */
-  dense?: boolean;
-
-  /**
-   * Boolean if the tooltip should allow line wrapping. This is disabled by
-   * default since the tooltip will display weirdly when its container element
-   * is small in size. It is advised to only enable line wrapping when there are
-   * long tooltips or the tooltips are bigger than the container element.
-   *
-   * Once line wrapping is enabled, you will most likely need to set some
-   * additional padding and widths.
-   */
-  lineWrap?: boolean;
-
-  /**
    * This ties directly into the CSSTransition `classNames` prop and is used to
    * generate and apply the correct class names during the tooltip's transition.
+   *
+   * @see {@link DEFAULT_TOOLTIP_CLASSNAMES}
+   * @defaultValue `DEFAULT_TOOLTIP_CLASSNAMES`
    */
   classNames?: CSSTransitionClassNames;
 
@@ -83,14 +70,11 @@ export interface TooltipProps
    * view. This should match whatever value is set for
    * `$rmd-tooltip-enter-duration`. A manual timeout is used instead of
    * `onTransitionEnd` to handle cancel animations easier.
+   *
+   * @see {@link DEFAULT_TOOLTIP_TIMEOUT}
+   * @defaultValue `DEFAULT_TOOLTIP_TIMEOUT`
    */
   timeout?: TransitionTimeout;
-
-  /**
-   * This is the position that the tooltip should appear related to its
-   * container element as well as updating the animation direction.
-   */
-  position?: SimplePosition;
 
   /**
    * Boolean if the tooltip is visible. This value changing will trigger the
@@ -98,8 +82,6 @@ export interface TooltipProps
    */
   visible: boolean;
 }
-
-const block = bem("rmd-tooltip");
 
 /**
  * This is the base tooltip component that can only be used to render a tooltip
@@ -157,13 +139,12 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
     const { elementProps, rendered } = useCSSTransition({
       nodeRef,
       timeout,
-      className: cn(
-        block({
+      className: tooltipClasses(
+        {
           dense,
-          "line-wrap": lineWrap,
-          "dense-line-wrap": dense && lineWrap,
-          [position]: true,
-        }),
+          lineWrap,
+          position,
+        },
         className
       ),
       classNames,

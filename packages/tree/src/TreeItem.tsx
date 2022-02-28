@@ -1,16 +1,13 @@
 import { forwardRef, useCallback } from "react";
-import cn from "classnames";
 import { useIcon } from "@react-md/icon";
 import type { ListElement } from "@react-md/list";
 import { ListItemChildren } from "@react-md/list";
 import { useInteractionStates } from "@react-md/states";
-import { bem } from "@react-md/utils";
 
 import { TreeGroup } from "./TreeGroup";
 import { TreeItemExpanderIcon } from "./TreeItemExpanderIcon";
 import type { TreeItemProps, TreeItemWithContentComponentProps } from "./types";
-
-const block = bem("rmd-tree-item");
+import { treeItemClasses, treeItemContentClasses } from "./styles";
 
 /**
  * This component renders an item within a tree with optional child items. This
@@ -126,21 +123,21 @@ export const TreeItem = forwardRef<
       {...(isLink ? noA11y : a11y)}
       ref={liRef}
       style={liStyle}
-      className={cn(block(), liClassName)}
+      className={treeItemClasses(liClassName)}
     >
       <Content
         {...props}
         {...(isLink ? a11y : undefined)}
         ref={ref}
-        className={cn(
-          block("content", {
+        className={treeItemContentClasses(
+          {
             link: isLink,
-            clickable: !disabled && !readOnly,
-            [height]: height !== "auto" && height !== "normal",
-            "three-lines": !!secondaryText && threeLines,
-            selected,
+            height,
             focused,
-          }),
+            selected,
+            clickable: !disabled && !readOnly,
+            threeLines: !!secondaryText && threeLines,
+          },
           className
         )}
       >

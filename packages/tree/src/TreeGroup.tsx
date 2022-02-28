@@ -1,9 +1,10 @@
 import { forwardRef } from "react";
-import cn from "classnames";
 import type { ListElement, ListProps } from "@react-md/list";
 import { List } from "@react-md/list";
 import type { CollapseProps } from "@react-md/transition";
 import { useCollapseTransition } from "@react-md/transition";
+
+import { treeGroupClasses } from "./styles";
 
 export interface TreeGroupProps
   extends ListProps,
@@ -39,7 +40,7 @@ export const TreeGroup = forwardRef<ListElement, TreeGroupProps>(
   ) {
     const { elementProps, rendered } = useCollapseTransition({
       style,
-      className: cn("rmd-tree-group", className),
+      className: treeGroupClasses(className),
       nodeRef,
       minHeight,
       minPaddingBottom,

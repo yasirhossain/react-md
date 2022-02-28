@@ -1,25 +1,45 @@
 import { forwardRef } from "react";
-import cn from "classnames";
-import { bem } from "@react-md/utils";
 
+import type { SrOnlyClassNameOptions } from "./styles";
+import { srOnlyClassName } from "./styles";
 import type { TypographyHTMLElement, TypographyProps } from "./Typography";
 import { Typography } from "./Typography";
 
-export interface SrOnlyProps extends TypographyProps {
+/**
+ * @remarks \@since REPLACE_VERSION Extends the {@link SrOnlyClassNameOptions} interface
+ * and added missing default value annotations.
+ */
+export interface SrOnlyProps extends TypographyProps, SrOnlyClassNameOptions {
   /**
-   * Boolean if the text should become visible when focused. If this prop is
-   * enabled and the `tabIndex` prop is `undefined`, the `tabIndex` will be
-   * updated to be `0`.
+   * @defaultValue `"span"`
+   * @see {@link TypographyProps.component}
    */
-  focusable?: boolean;
+  component?: TypographyProps["component"];
 }
-
-const block = bem("rmd-sr-only");
 
 /**
  * This component is used to create text that is only visible to screen readers.
  * If you enable the `focusable` prop, the text will become visible to all users
  * while focused.
+ *
+ * @example
+ * Simple Example
+ * ```tsx
+ * import type { ReactElement } from "react";
+ * import { SrOnly } from "@react-md/typography";
+ *
+ * function Example(): ReactElement {
+ *   return (
+ *     <label>
+ *       <SrOnly>Upload</SrOnly>
+ *       <UploadSVGIcon />
+ *       <input type="file" />
+ *     </label>
+ *   );
+ * }
+ * ```
+ *
+ * @remarks \@since REPLACE_VERSION Added an example to the documentation.
  */
 export const SrOnly = forwardRef<TypographyHTMLElement, SrOnlyProps>(
   function SrOnly(
@@ -44,7 +64,7 @@ export const SrOnly = forwardRef<TypographyHTMLElement, SrOnlyProps>(
         ref={ref}
         tabIndex={tabIndex}
         component={component}
-        className={cn(block({ focusable }), className)}
+        className={srOnlyClassName({ focusable }, className)}
       >
         {children}
       </Typography>

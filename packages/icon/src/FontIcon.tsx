@@ -1,40 +1,29 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { forwardRef } from "react";
-import cn from "classnames";
-import { bem } from "@react-md/utils";
 
-export interface FontIconProps extends HTMLAttributes<HTMLElement> {
+import type { FontIconClassNameOptions } from "./styles";
+import { iconClasses } from "./styles";
+
+/**
+ * @remarks \@since REPLACE_VERSION Extends the new {@link FontIconClassNameOptions}
+ * interface and added missing default value annotations.
+ */
+export interface FontIconProps
+  extends HTMLAttributes<HTMLElement>,
+    FontIconClassNameOptions {
   /**
    * The font icon class name to use.
+   *
+   * @defaultValue `"material-icons"`
    */
   iconClassName?: string;
-
-  /**
-   * Boolean if the font icon should use the dense spec.
-   */
-  dense?: boolean;
 
   /**
    * Any children to render to create the font icon. This is required for
    * material-icons.
    */
   children?: ReactNode;
-
-  /**
-   * Either a boolean that will enforce the 24x24 size of the font icon or a
-   * number of the size to enforce. This is useful when using other font icon
-   * libraries that do not have a consistent size.
-   */
-  forceSize?: boolean;
-
-  /**
-   * Boolean if the `forceSize` prop should also force the `font-size` instead
-   * of only `width` and `height`.
-   */
-  forceFontSize?: boolean;
 }
-
-const block = bem("rmd-icon");
 
 /**
  * The `FontIcon` component is used for rendering a font-icon library's icon.
@@ -64,13 +53,13 @@ export const FontIcon = forwardRef<HTMLElement, FontIconProps>(
         {...props}
         aria-hidden={ariaHidden}
         ref={ref}
-        className={cn(
-          block({
-            font: true,
+        className={iconClasses(
+          {
+            type: "font",
             dense,
-            "forced-font": forceFontSize,
-            "forced-size": forceSize,
-          }),
+            forceFontSize,
+            forceSize,
+          },
           iconClassName,
           className
         )}

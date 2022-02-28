@@ -3,7 +3,7 @@
 exports[`ListItemLink should render correctly 1`] = `
 <div>
   <a
-    class="rmd-list-item rmd-list-item--clickable rmd-list-item--link"
+    class="rmd-list-item rmd-list-item--link rmd-list-item--clickable"
     href="#"
   >
     <span
@@ -16,7 +16,7 @@ exports[`ListItemLink should render correctly 1`] = `
 exports[`ListItemLink should render correctly 2`] = `
 <div>
   <a
-    class="rmd-list-item rmd-list-item--clickable rmd-list-item--link rmd-list-item--medium"
+    class="rmd-list-item rmd-list-item--link rmd-list-item--medium rmd-list-item--clickable"
     href="#"
   >
     <span

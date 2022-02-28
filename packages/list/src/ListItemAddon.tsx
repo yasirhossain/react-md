@@ -1,43 +1,31 @@
 import type { ReactElement, ReactNode } from "react";
-import cn from "classnames";
 import type { TextIconSpacingProps } from "@react-md/icon";
 import { TextIconSpacing } from "@react-md/icon";
-import { bem } from "@react-md/utils";
 
-export type ListItemAddonPosition = "top" | "middle" | "bottom";
-export type ListItemAddonType = "icon" | "avatar" | "media" | "large-media";
+import { listItemAddonClassName } from "./styles";
+import type { ListItemAddonClassNameOptions } from "./types";
 
+/**
+ * @remarks \@since REPLACE_VERSION Extends the {@link ListItemAddonClassNameOptions}
+ * interface and added missing default value annotations.
+ */
 export interface ListItemAddonProps
-  extends Omit<TextIconSpacingProps, "icon" | "iconAfter" | "forceIconWrap"> {
+  extends Omit<TextIconSpacingProps, "icon" | "iconAfter" | "forceIconWrap">,
+    ListItemAddonClassNameOptions {
   /**
    * The addon that should be rendered.
    */
   addon: ReactNode | ReactElement;
 
   /**
-   * Boolean if the addon should appear after the `children`.
-   */
-  addonAfter?: boolean;
-
-  /**
-   * The addon type that is used to adjust the spacing styles.
-   */
-  type?: ListItemAddonType;
-
-  /**
    * Boolean if the addon should be forced into a `<span>` with the class names
    * applied instead of attempting to clone into the provided icon. If the
    * `type` is set to `"media"` or `"large-media"`, this will default to `true`.
+   *
+   * @defaultValue `type === "media" || type === "large-media"`
    */
   forceAddonWrap?: boolean;
-
-  /**
-   * The vertical position to use for the addon.
-   */
-  position?: ListItemAddonPosition;
 }
-
-const base = bem("rmd-list-item");
 
 /**
  * The `ListItemAddon` is used to create an addon to the left or right of the
@@ -50,25 +38,20 @@ export function ListItemAddon({
   addonAfter = false,
   type = "icon",
   position = "middle",
-  forceAddonWrap,
+  forceAddonWrap = type === "media" || type === "large-media",
   ...props
 }: ListItemAddonProps): ReactElement {
-  const isMedia = type === "media" || type === "large-media";
-  const isAvatar = type === "avatar";
-
   return (
     <TextIconSpacing
       {...props}
       icon={addon}
-      forceIconWrap={forceAddonWrap ?? isMedia}
-      className={cn(
-        base("addon", {
-          [position]: position !== "middle",
-          before: !addonAfter,
-          "avatar-before": !addonAfter && isAvatar,
-          media: isMedia,
-          "media-large": type === "large-media",
-        }),
+      forceIconWrap={forceAddonWrap}
+      className={listItemAddonClassName(
+        {
+          type,
+          position,
+          addonAfter,
+        },
         className
       )}
       iconAfter={addonAfter}

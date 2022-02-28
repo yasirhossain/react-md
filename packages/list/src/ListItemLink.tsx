@@ -1,13 +1,12 @@
 import type { AnchorHTMLAttributes, ElementType } from "react";
 import { forwardRef } from "react";
-import cn from "classnames";
 import type { InteractionStatesOptions } from "@react-md/states";
 import { useInteractionStates } from "@react-md/states";
 
-import type { SimpleListItemProps } from "./getListItemHeight";
 import { getListItemHeight } from "./getListItemHeight";
-import type { ListItemChildrenProps } from "./ListItemChildren";
 import { ListItemChildren } from "./ListItemChildren";
+import type { ListItemChildrenProps, SimpleListItemProps } from "./types";
+import { listItemClassName } from "./styles";
 
 export interface ListItemLinkProps
   extends AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -20,6 +19,8 @@ export interface ListItemLinkProps
    * {@link https://github.com/ReactTraining/react-router|react-router} or
    * {@link https://github.com/reach/router|@reach/router}. This will call
    * `createElement` with this value and provide all props and class name.
+   *
+   * @defaultValue `"a"`
    */
   component?: ElementType;
 }
@@ -100,12 +101,12 @@ export const ListItemLink = forwardRef<
       {...props}
       {...handlers}
       ref={ref}
-      className={cn(
-        "rmd-list-item rmd-list-item--clickable rmd-list-item--link",
+      className={listItemClassName(
         {
-          [`rmd-list-item--${height}`]:
-            height !== "auto" && height !== "normal",
-          "rmd-list-item--three-lines": !!secondaryText && threeLines,
+          link: true,
+          height,
+          threeLines: !!secondaryText && threeLines,
+          clickable: true,
         },
         className
       )}

@@ -1,14 +1,12 @@
 import type { ReactElement, ReactNode } from "react";
-import cn from "classnames";
 import type { IconRotatorBaseProps } from "@react-md/icon";
 import { IconRotator, useIcon } from "@react-md/icon";
-import { bem } from "@react-md/utils";
+
+import { treeItemRotatorClasses } from "./styles";
 
 export interface TreeItemExpanderIconProps extends IconRotatorBaseProps {
   children?: ReactNode;
 }
-
-const block = bem("rmd-tree-item");
 
 /**
  * The `TreeItemExpanderIcon` is a simple wrapper of the `IconRotator` prop to
@@ -26,7 +24,7 @@ export function TreeItemExpanderIcon({
     <IconRotator
       {...props}
       rotated={rotated}
-      className={cn(block("rotator-icon"), className)}
+      className={treeItemRotatorClasses(className)}
     >
       {icon}
     </IconRotator>

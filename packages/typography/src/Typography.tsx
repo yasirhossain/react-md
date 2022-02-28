@@ -4,52 +4,11 @@ import type {
   ReactElement,
   ReactNode,
 } from "react";
-import { createElement, forwardRef } from "react";
-import cn from "classnames";
+import { forwardRef } from "react";
 import type { ClassNameCloneableChild } from "@react-md/utils";
-import { bem } from "@react-md/utils";
 
-/**
- * A union of all the material design provided typography styles. When used with
- * the Typography component, this will generate the correct typography className
- * to apply and determine what component to be rendered as if none was provided.
- *
- * @remarks \@since 4.0.0
- */
-export type TypographyType =
-  | "headline-1"
-  | "headline-2"
-  | "headline-3"
-  | "headline-4"
-  | "headline-5"
-  | "headline-6"
-  | "subtitle-1"
-  | "subtitle-2"
-  | "body-1"
-  | "body-2"
-  | "caption"
-  | "overline"
-  | "button";
-
-export type TextAlign = "left" | "center" | "right";
-export type TextDecoration = "underline" | "overline" | "line-through";
-export type TextTransform = "capitalize" | "uppercase" | "lowercase";
-export type TextWeight =
-  | "thin"
-  | "light"
-  | "regular"
-  | "medium"
-  | "bold"
-  | "semi-bold"
-  | "black";
-export type TextColor =
-  | "secondary"
-  | "hint"
-  | "theme-primary"
-  | "theme-secondary"
-  | "theme-warning"
-  | "theme-error";
-export type FontStyle = "italic" | "oblique" | "normal";
+import type { TypographyClassNameOptions, TypographyType } from "./styles";
+import { typographyClassName } from "./styles";
 
 /**
  * A union of the default supported elements that the `Typography` component can
@@ -73,7 +32,13 @@ export type TypographyRenderFunction = (props: {
   className: string;
 }) => ReactElement;
 
-export interface TypographyProps extends HTMLAttributes<TypographyHTMLElement> {
+/**
+ * @remarks \@since REPLACE_VERSION Extends the {@link TypographyClassNameOptions}
+ * interface and added missing default value annotations.
+ */
+export interface TypographyProps
+  extends Omit<HTMLAttributes<TypographyHTMLElement>, "color">,
+    TypographyClassNameOptions {
   /**
    * An optional className to merge into typography styles.
    */
@@ -98,15 +63,9 @@ export interface TypographyProps extends HTMLAttributes<TypographyHTMLElement> {
    * - `"overline"   -> <span>`
    * - `"button"     -> <button>`
    *
+   * @defaultValue `null`
    */
   component?: ElementType | null;
-
-  /**
-   * One of the material design typography text styles. This is used to generate
-   * a className that can be applied to any element and have the correct
-   * typography.
-   */
-  type?: TypographyType;
 
   /**
    * Either a child render function or a react node. If this is not the child
@@ -114,51 +73,6 @@ export interface TypographyProps extends HTMLAttributes<TypographyHTMLElement> {
    * `component` prop.
    */
   children?: ReactNode | ClassNameCloneableChild | TypographyRenderFunction;
-
-  /**
-   * An optional text alignment to apply.
-   */
-  align?: TextAlign;
-
-  /**
-   * An optional text color to apply. Unline normal theme colors, these will
-   * reflect the `text-secondary-on-background` and `text-hint-on-background`
-   * instead of the primary or secondary theme colors.
-   */
-  color?: TextColor;
-
-  /**
-   * An optional text decoration to apply.
-   */
-  decoration?: TextDecoration;
-
-  /**
-   * An optional text transformation to apply.
-   */
-  transform?: TextTransform;
-
-  /**
-   * An optional font-weight to apply.
-   */
-  weight?: TextWeight;
-
-  /**
-   * An optional font-style to apply.
-   */
-  fontStyle?: FontStyle;
-
-  /**
-   * Since the typography within react-md tries to not modify base elements, the
-   * default margin applied to heading tags (h1-h6) and paragraph (p) might have
-   * large margin that you don't want applied when using this component. You can
-   * disable:
-   *
-   * - only the top margin by setting this prop to `"bottom"`
-   * - only the bottom margin by setting this prop to `"top"`
-   * - top and bottom margin by setting this prop to `"none"`
-   * - or keep the initial behavior: `"initial"`
-   */
-  margin?: "initial" | "none" | "top" | "bottom";
 }
 
 function getComponent(
@@ -196,8 +110,6 @@ function getComponent(
   }
 }
 
-const block = bem("rmd-typography");
-
 /**
  * The `Typography` component is used to render text with the material design
  * typography styles applied.  By default, everything will be rendered in a
@@ -223,50 +135,82 @@ const block = bem("rmd-typography");
  *
  * NOTE: if the `component` prop is not `null`, this logic will be ignored and
  * the provided `component` will be used instead.
+ *
+ * @example
+ * Simple Example
+ * ```tsx
+ * import type { ReactElement } from "react";
+ * import { Typography } from "@react-md/typography";
+ *
+ * function Example(): ReactElement {
+ *   return (
+ *     <>
+ *       <Typography type="headline-1">Headline 1</Typography>
+ *       <Typography type="headline-2">Headline 2</Typography>
+ *       <Typography type="headline-3">Headline 3</Typography>
+ *       <Typography type="headline-4">Headline 4</Typography>
+ *       <Typography type="headline-5">Headline 5</Typography>
+ *       <Typography type="headline-6">Headline 6</Typography>
+ *       <Typography type="subtitle-1">Subtitle 1</Typography>
+ *       <Typography type="subtitle-2">Subtitle 2</Typography>
+ *       <Typography type="body-1">Body 1</Typography>
+ *       <Typography type="body-2">Body 2</Typography>
+ *       <Typography type="caption" component="h5">
+ *         Caption text
+ *       </Typography>
+ *       <Typography type="overline" component="h5">
+ *         Overline text
+ *       </Typography>
+ *       <Typography type="button" component="h5">
+ *         Button text
+ *       </Typography>
+ *     </>
+ *   );
+ * }
+ * ```
+ *
+ * @remarks \@since REPLACE_VERSION Added an example to the documentation.
  */
 export const Typography = forwardRef<TypographyHTMLElement, TypographyProps>(
   function Typography(
     {
       className: propClassName,
       children,
-      type = "body-1",
       component = null,
       align,
       color,
       decoration,
-      transform,
-      weight,
       fontStyle,
-      margin = "initial",
+      margin,
+      transform,
+      type = "body-1",
+      weight,
       ...props
     },
     ref
   ) {
-    const className = cn(
-      block({
-        [type]: true,
-        "no-margin": margin === "none",
-        "no-margin-top": margin === "bottom",
-        "no-margin-bottom": margin === "top",
-        [align || ""]: align,
-        [decoration || ""]: decoration && decoration !== "overline",
-        [color || ""]: color,
-        // only because "overline" is technically one of the valid material design types :/
-        "overline-decoration": decoration === "overline",
-        [transform || ""]: transform,
-        [weight || ""]: weight,
-        [fontStyle || ""]: fontStyle,
-      }),
+    const className = typographyClassName(
+      {
+        align,
+        color,
+        decoration,
+        fontStyle,
+        margin,
+        transform,
+        type,
+        weight,
+      },
       propClassName
     );
     if (typeof children === "function") {
       return (children as TypographyRenderFunction)({ className });
     }
 
-    return createElement(
-      getComponent(component, type),
-      { ...props, className, ref },
-      children
+    const Component = getComponent(component, type);
+    return (
+      <Component {...props} ref={ref} className={className}>
+        {children}
+      </Component>
     );
   }
 );

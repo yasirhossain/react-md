@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
-import cn from "classnames";
-import { bem } from "@react-md/utils";
+
+import { listItemTextClassName } from "./styles";
 
 export interface ListItemTextProps {
   /**
@@ -28,8 +28,6 @@ export interface ListItemTextProps {
   secondaryText?: ReactNode;
 }
 
-const block = bem("rmd-list-item");
-
 /**
  * This component us used to create the one to three lines of text within a
  * `ListItem` or `SimpleListItem`.
@@ -44,8 +42,8 @@ export function ListItemText({
   if (secondaryText) {
     secondaryContent = (
       <span
-        className={cn(
-          block("text", { secondary: true }),
+        className={listItemTextClassName(
+          { secondary: true },
           secondaryTextClassName
         )}
       >
@@ -55,7 +53,7 @@ export function ListItemText({
   }
 
   return (
-    <span className={cn(block("text"), className)}>
+    <span className={listItemTextClassName({}, className)}>
       {children}
       {secondaryContent}
     </span>

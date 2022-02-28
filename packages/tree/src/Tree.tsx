@@ -1,19 +1,17 @@
 import type { MutableRefObject, ReactElement, ReactNode } from "react";
 import { forwardRef } from "react";
-import cn from "classnames";
 import { useIcon } from "@react-md/icon";
 import type { ListElement } from "@react-md/list";
 import { List } from "@react-md/list";
-import { bem } from "@react-md/utils";
 
 import { defaultGetItemLabel } from "./defaultGetItemLabel";
 import { defaultGetItemValue } from "./defaultGetItemValue";
 import { defaultTreeItemRenderer } from "./defaultTreeItemRenderer";
+import { treeClasses } from "./styles";
 import type { TreeProps, UnknownTreeItem } from "./types";
 import type { NestedTreeItem } from "./useNestedTreeList";
 import { useTreeMovement } from "./useTreeMovement";
 
-const block = bem("rmd-tree");
 const defaultGetItemProps = (): undefined => undefined;
 
 /**
@@ -156,7 +154,7 @@ export const Tree = forwardRef<ListElement, TreeProps<any>>(function Tree( // es
       aria-multiselectable={multiSelect || undefined}
       role="tree"
       tabIndex={0}
-      className={cn(block(), className)}
+      className={treeClasses(className)}
       onBlur={handleBlur}
       onFocus={handleFocus}
       onKeyDown={handleKeyDown}

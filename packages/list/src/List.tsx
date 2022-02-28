@@ -1,36 +1,36 @@
 import type { HTMLAttributes } from "react";
 import { forwardRef } from "react";
-import cn from "classnames";
-import { bem } from "@react-md/utils";
+
+import { listClassName } from "./styles";
+import type { ListClassNameOptions } from "./types";
 
 export type ListElement = HTMLUListElement | HTMLOListElement;
-export interface ListProps extends HTMLAttributes<ListElement> {
+
+/**
+ * @remarks \@since REPLACE_VERSION Extends {@link ListClassNameOptions} interface and
+ * added missing default value annotations.
+ */
+export interface ListProps
+  extends HTMLAttributes<ListElement>,
+    ListClassNameOptions {
   /**
    * The role is set to `"none"` by default for lists screen readers announce
    * lists differently than other elements on the page. Since the major use-case
    * for lists is to contain clickable items, setting this to `"none"` fixes
    * this issue.
+   *
+   * @defaultValue `"none"`
    */
   role?: HTMLAttributes<ListElement>["role"];
 
   /**
-   * Boolean if the dense spec should be applied to the list.
-   */
-  dense?: boolean;
-
-  /**
    * Boolean if the list's order is important. This will update the list to be
    * rendered as an `<ol>` instead of `<ul>`.
+   *
+   * @defaultValue `false`
    */
   ordered?: boolean;
-
-  /**
-   * Boolean if the list should appear horizontally instead of vertically.
-   */
-  horizontal?: boolean;
 }
-
-const block = bem("rmd-list");
 
 /**
  * The `List` component creates an unstyled ordered or unordered list that
@@ -56,7 +56,7 @@ export const List = forwardRef<ListElement, ListProps>(function List(
       {...props}
       ref={ref}
       role={role}
-      className={cn(block({ dense, horizontal }), className)}
+      className={listClassName({ dense, horizontal }, className)}
     >
       {children}
     </Component>

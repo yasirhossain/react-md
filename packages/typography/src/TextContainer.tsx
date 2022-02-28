@@ -8,11 +8,8 @@ import { Children, cloneElement, forwardRef, isValidElement } from "react";
 import cn from "classnames";
 import type { ClassNameCloneableChild } from "@react-md/utils";
 
-/**
- * A union of the available text container sizes. One of these values must be
- * chosen to help set the max width for text.
- */
-export type TextContainerSize = "auto" | "mobile" | "desktop";
+import type { TextContainerClassNameOptions } from "./styles";
+import { textContainerClassName } from "./styles";
 
 /**
  * A type describing the text container's children render function. It provides
@@ -25,24 +22,23 @@ export type TextContainerRenderFunction = (props: {
 
 /**
  * The base props for rendering the text component.
+ *
+ * @remarks \@since REPLACE_VERSION Extends the {@link TextContainerClassNameOptions}
+ * interface and added missing default value annotations.
  */
-export interface TextContainerProps extends HTMLAttributes<HTMLDivElement> {
+export interface TextContainerProps
+  extends HTMLAttributes<HTMLDivElement>,
+    TextContainerClassNameOptions {
   /**
    * An optional className to merge with typography text container styles.
    */
   className?: string;
 
   /**
-   * The size for the text container. This can usually just be left at the
-   * default of `"auto"` since it will automatically transition between
-   * `"mobile"` and `"desktop"` based on media queries.  However, you can also
-   * manually specify `"mobile"` or `"desktop"` if needed.
-   */
-  size?: TextContainerSize;
-
-  /**
    * The component to render as. By default this will just be a div, but
    * anything can be provided.
+   *
+   * @defaultValue `"div"`
    */
   component?: ElementType;
 
@@ -59,10 +55,37 @@ export interface TextContainerProps extends HTMLAttributes<HTMLDivElement> {
    *
    * Note: This will only work if the child component passed the `className`
    * down to to the DOM element.
+   *
+   * @defaultValue `false`
    */
   clone?: boolean;
 }
 
+/**
+ * The `TextContainer` component should be used as a container for text within a
+ * page to optimize legibility of content by applying a `max-width` based on
+ * screen size.
+ *
+ * @example
+ * Simple Example
+ * ```tsx
+ * import type { ReactElement } from "react";
+ * import { TextContainer, Typography } from "@react-md/typography";
+ *
+ * function Example(): ReactElement {
+ *   return (
+ *     <TextContainer>
+ *       <Typography type="headline-2">Some Article Header</Typography>
+ *       <Typography>
+ *         Pretend multiple paragraphs of text.
+ *       </Typography>
+ *     </TextContainer>
+ *   );
+ * }
+ * ```
+ *
+ * @remarks \@since 5.0.0 Added documentation.
+ */
 export const TextContainer = forwardRef<
   HTMLDivElement | ElementType,
   TextContainerProps
@@ -70,17 +93,14 @@ export const TextContainer = forwardRef<
   {
     className: propClassName,
     component: Component = "div",
-    size = "auto",
+    size,
     children,
     clone,
     ...props
   },
   ref
 ) {
-  const className = cn(
-    `rmd-text-container rmd-text-container--${size}`,
-    propClassName
-  );
+  const className = textContainerClassName({ size }, propClassName);
   if (clone && isValidElement(children)) {
     const child = Children.only(children);
     return cloneElement(child, {

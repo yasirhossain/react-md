@@ -1,8 +1,14 @@
 import type { ReactElement, ReactNode } from "react";
 import { Children, cloneElement, isValidElement } from "react";
 import cn from "classnames";
+import type { TextIconSpacingClassNameOptions } from "./styles";
+import { textIconSpacingClasses } from "./styles";
 
-export interface TextIconSpacingProps {
+/**
+ * @remarks \@since REPLACE_VERSION Extends the {@link TextIconSpacingClassNameOptions}
+ * interface and added missing default value annotations.
+ */
+export interface TextIconSpacingProps extends TextIconSpacingClassNameOptions {
   /**
    * An optional className to apply to the surroudning `<span>` when the
    * `forceIconWrap` prop is enabled or the icon is not a valid React Element.
@@ -24,87 +30,93 @@ export interface TextIconSpacingProps {
   icon?: ReactElement | ReactNode;
 
   /**
-   * Boolean if the icon should appear after the text instead of before.
-   */
-  iconAfter?: boolean;
-
-  /**
    * The children to render before or after the provided icon. This is defaulted
    * to `null` so that providing a `null` icon will correctly render without
    * React crashing.
+   *
+   * @defaultValue `null`
    */
   children?: ReactNode;
 
   /**
-   * The class name to use for an icon that is placed before text.
-   */
-  beforeClassName?: string;
-
-  /**
-   * The class name to use for an icon that is placed after text.
-   */
-  afterClassName?: string;
-
-  /**
-   * The class name to use for an icon that is placed before above the text.
-   * This is used when the `stacked` prop is enabled and the `iconAfter` prop is
-   * disabled or omitted.
-   */
-  aboveClassName?: string;
-
-  /**
-   * The class name to use for an icon that is placed before above the text.
-   * This is used when the `stacked` prop is enabled and the `iconAfter` prop is
-   * enabled.
-   */
-  belowClassName?: string;
-
-  /**
    * Boolean if the icon should be forced into a `<span>` with the class names
    * applied instead of attempting to clone into the provided icon.
+   *
+   * @defaultValue `false`
    */
   forceIconWrap?: boolean;
-
-  /**
-   * Boolean if the icon and text should be stacked instead of inline. Note:
-   * You'll normally want to update the container element to have
-   * `display: flex` and `flex-direction: column` for this to work.
-   */
-  stacked?: boolean;
-
-  /**
-   * Boolean if the icon and content are in a `column-reverse` or `row-reverse`
-   * `flex-direction`. This will swap the different classnames as needed.
-   *
-   * @remarks \@since 2.5.0
-   */
-  flexReverse?: boolean;
 }
 
+/**
+ * Applies spacing in a flex container between two elements. This is generally
+ * for icons and text, but there are no restictions on usage.
+ *
+ * @example
+ * Simple Example
+ * ```tsx
+ * import type { ReactElement } from "react";
+ * import { Button } from "@react-md/button";
+ * import { TextIconSpacing } from "@react-md/icon";
+ * import { HomeSVGIcon } from "@react-md/material-icons";
+ *
+ * function Example(): ReactElement {
+ *   return (
+ *     <Button>
+ *       <TextIconSpacing icon={<HomeSVGIcon />}>Button</TextIconSpacing>
+ *     </Button>
+ *   );
+ * }
+ * ```
+ *
+ * @example
+ * Multiple Usage
+ * ```tsx
+ * import type { ReactElement } from "react";
+ * import { Button } from "@react-md/button";
+ * import { TextIconSpacing } from "@react-md/icon";
+ * import { CloseSVGIcon, HomeSVGIcon } from "@react-md/material-icons";
+ *
+ * function Example(): ReactElement {
+ *   return (
+ *     <Button>
+ *       <TextIconSpacing icon={<HomeSVGIcon />}>
+ *         <TextIconSpacing icon={<CloseSVGIcon />} iconAfter>
+ *           Multiple
+ *         </TextIconSpacing>
+ *       </TextIconSpacing>
+ *     </Button>
+ *   );
+ * }
+ * ```
+ *
+ * @remarks \@since REPLACE_VERSION Added documentation.
+ */
 export function TextIconSpacing({
   className,
   icon: propIcon,
   children = null,
-  stacked = false,
-  iconAfter = false,
-  flexReverse = false,
+  stacked,
+  iconAfter,
+  flexReverse,
   forceIconWrap = false,
-  beforeClassName = "rmd-icon--before",
-  afterClassName = "rmd-icon--after",
-  aboveClassName = "rmd-icon--above",
-  belowClassName = "rmd-icon--below",
+  beforeClassName,
+  afterClassName,
+  aboveClassName,
+  belowClassName,
 }: TextIconSpacingProps): ReactElement {
   if (!propIcon) {
     return <>{children}</>;
   }
 
-  const isAfter = flexReverse ? !iconAfter : iconAfter;
-  const baseClassName = cn(
+  const baseClassName = textIconSpacingClasses(
     {
-      [beforeClassName]: !stacked && !isAfter,
-      [afterClassName]: !stacked && isAfter,
-      [aboveClassName]: stacked && !isAfter,
-      [belowClassName]: stacked && isAfter,
+      stacked,
+      iconAfter,
+      flexReverse,
+      beforeClassName,
+      afterClassName,
+      aboveClassName,
+      belowClassName,
     },
     className
   );

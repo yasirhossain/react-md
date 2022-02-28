@@ -2,16 +2,21 @@ import { forwardRef } from "react";
 import type { InteractionStatesOptions } from "@react-md/states";
 import { useInteractionStates } from "@react-md/states";
 
-import type { SimpleListItemProps } from "./getListItemHeight";
 import { getListItemHeight } from "./getListItemHeight";
 import { ListItemChildren } from "./ListItemChildren";
 import { SimpleListItem } from "./SimpleListItem";
+import type { SimpleListItemProps } from "./types";
 
+/**
+ * @remarks \@since REPLACE_VERSION Added missing default value annotations.
+ */
 export interface ListItemProps
   extends SimpleListItemProps,
     InteractionStatesOptions<HTMLLIElement> {
   /**
    * An optional `tabIndex` for the clickable and focusable item.
+   *
+   * @defaultValue `disabled ? -1 : 0`
    */
   tabIndex?: number;
 }

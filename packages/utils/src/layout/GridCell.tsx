@@ -2,10 +2,15 @@ import type { HTMLAttributes } from "react";
 import { Children, cloneElement, forwardRef, isValidElement } from "react";
 import cn from "classnames";
 
-import { bem } from "../bem";
 import { useAppSize } from "../sizing/useAppSize";
+import type { GridCellClassNameOptions } from "./styles";
+import { gridCellClassName } from "./styles";
 
-export interface GridCSSProperties {
+/**
+ * @remarks \@since REPLACE_VERSION Extends the {@link GridListCellStyleOptions}
+ * interface.
+ */
+export interface GridCSSProperties extends GridCellClassNameOptions {
   /**
    * The number of rows that a cell should span. If this value is provided, it
    * will be used instead of the `rowEnd` property. When this is `undefined`, it
@@ -25,15 +30,6 @@ export interface GridCSSProperties {
    * property is provided.
    */
   rowEnd?: number | string;
-
-  /**
-   * The number of columns that the cell should span. If this value is provided,
-   * it will be used instead of the `colEnd` property.
-   *
-   * Note: If this value is larger than the number of columns allowed in the
-   * current grid, it will shrink all the other columns.
-   */
-  colSpan?: number;
 
   /**
    * The column that the cell should start at. When this is `undefined`, it will
@@ -92,8 +88,6 @@ export interface GridCellProps
   largeDesktop?: GridCSSProperties;
 }
 
-const block = bem("rmd-grid");
-
 export const GridCell = forwardRef<HTMLDivElement, GridCellProps>(
   function GridCell(
     {
@@ -147,12 +141,7 @@ export const GridCell = forwardRef<HTMLDivElement, GridCellProps>(
       gridRowEnd: rowSpan ? `span ${rowSpan}` : rowEnd,
       ...style,
     };
-    const cellClassName = cn(
-      block("cell", {
-        [`${colSpan}`]: colSpan,
-      }),
-      className
-    );
+    const cellClassName = gridCellClassName({ colSpan }, className);
 
     if (clone && isValidElement(children)) {
       const child = Children.only(children);

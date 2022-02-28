@@ -1,11 +1,11 @@
 import type { RefCallback } from "react";
 import { createContext, useCallback, useContext, useState } from "react";
-import cn from "classnames";
 
 import { useResizeObserver } from "../sizing/useResizeObserver";
 import type { PropsWithRef } from "../types";
 import { useEnsuredRef } from "../useEnsuredRef";
 import { scrollbarSize } from "./scrollbarSize";
+import { gridListClassName } from "./styles";
 
 /**
  * This is the css variable that is used store the current size of each cell.
@@ -65,6 +65,7 @@ export function useGridListSize(): GridListSize {
 
 /**
  * @remarks \@since 2.3.0
+ * @remarks \@since REPLACE_VERSION Added missing default value annotations.
  */
 export interface UseGridListOptions {
   /**
@@ -81,12 +82,16 @@ export interface UseGridListOptions {
   /**
    * Boolean if the recalculation of grid sizing should not happen for height
    * changes.
+   *
+   * @defaultValue `false`
    */
   disableHeight?: boolean;
 
   /**
    * Boolean if the recalculation of grid sizing should not happen for width
    * changes.
+   *
+   * @defaultValue `false`
    */
   disableWidth?: boolean;
 
@@ -99,6 +104,8 @@ export interface UseGridListOptions {
 
   /**
    * The max size that each cell can be.
+   *
+   * @defaultValue `DEFAULT_GRID_LIST_MAX_CELL_SIZE`
    */
   maxCellSize?: number;
 
@@ -119,6 +126,8 @@ export interface UseGridListOptions {
    * scrollbars will be included.  If you add a border or change the padding or
    * add borders to this component, you'll need to update the `containerPadding`
    * to be the new number.
+   *
+   * @defaultValue `DEFAULT_GRID_LIST_PADDING`
    */
   containerPadding?: number;
 }
@@ -228,7 +237,7 @@ export function useGridList<E extends HTMLElement>({
     {
       ref: refHandler,
       style: mergedStyle,
-      className: cn("rmd-grid-list", className),
+      className: gridListClassName(className),
     },
     gridSize,
   ];

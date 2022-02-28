@@ -24,6 +24,9 @@ import {
  */
 export type RenderGridListChildren = (size: GridListSize) => ReactNode;
 
+/**
+ * @remarks \@since REPLACE_VERSION Added missing default value annotations.
+ */
 export interface GridListProps
   extends HTMLAttributes<HTMLDivElement>,
     UseGridListOptions {
@@ -32,6 +35,8 @@ export interface GridListProps
    * the `GridList`. This should normally stay as `false` since tracking width
    * changes will allow for dynamic content being added to the list to not mess
    * up the grid calculation when the user is on an OS that shows scrollbars.
+   *
+   * @defaultValue `false`
    */
   disableHeightObserver?: boolean;
 
@@ -40,6 +45,8 @@ export interface GridListProps
    * the `GridList`. This should normally stay as `false` since tracking width
    * changes will allow for dynamic content being added to the list to not mess
    * up the grid calculation when the user is on an OS that shows scrollbars.
+   *
+   * @defaultValue `false`
    */
   disableWidthObserver?: boolean;
 
@@ -55,6 +62,8 @@ export interface GridListProps
    * Boolean if the current cell sizing should automatically be cloned into each
    * child. This will only work if the `children` is renderable element or a
    * list of renderable elements that accept the `style` and `className` props.
+   *
+   * @defaultValue `false`
    */
   clone?: boolean;
 
@@ -62,6 +71,8 @@ export interface GridListProps
    * Boolean if each child within the `GridList` should be wrapped with the
    * `GridListCell` component.  This will only work if the `children` is not a
    * `function`.
+   *
+   * @defaultValue `false`
    */
   wrapOnly?: boolean;
 }

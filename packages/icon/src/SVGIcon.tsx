@@ -1,13 +1,22 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { forwardRef } from "react";
-import cn from "classnames";
-import { bem } from "@react-md/utils";
 
-export interface SVGIconProps extends HTMLAttributes<SVGSVGElement> {
+import type { SVGIconClassNameOptions } from "./styles";
+import { iconClasses } from "./styles";
+
+/**
+ * @remarks \@since REPLACE_VERSION Extends the new {@link SVGIconClassNameOptions}
+ * interface and added missing default value annotations.
+ */
+export interface SVGIconProps
+  extends HTMLAttributes<SVGSVGElement>,
+    SVGIconClassNameOptions {
   /**
    * Boolean if the SVG should gain the `focusable` attribute. This is disabled
    * by default since IE11 and Edge actually default this to true and keyboard's
    * will tab focus all SVGs.
+   *
+   * @defaultValue `"false"`
    */
   focusable?: "false" | "true" | boolean;
 
@@ -28,12 +37,16 @@ export interface SVGIconProps extends HTMLAttributes<SVGSVGElement> {
    * provide `viewBox="0 0 25 20"`, the coordinates inside the SVG will go from
    * the top left corner (0, 0) to the bottom right (25, 20) and each unit will
    * be worth `10px`.
+   *
+   * @defaultValue `"0 0 24 24"`
    */
   viewBox?: string;
 
   /**
    * An optional `xmlns` string to provide. The `use` prop will not work without
    * this prop defined.
+   *
+   * @defaultValue `"http://www.w3.org/2000/svg"`
    */
   xmlns?: string;
 
@@ -54,18 +67,11 @@ export interface SVGIconProps extends HTMLAttributes<SVGSVGElement> {
   use?: string;
 
   /**
-   * Boolean if the icon should use the dense spec.
-   */
-  dense?: boolean;
-
-  /**
    * Any `<svg>` children to render to create your icon. This can not be used
    * with the `use` prop.
    */
   children?: ReactNode;
 }
-
-const block = bem("rmd-icon");
 
 /**
  * The `SVGIcon` component is used to render inline SVG icons or SVG icons in a
@@ -95,7 +101,7 @@ export const SVGIcon = forwardRef<SVGSVGElement, SVGIconProps>(function SVGIcon(
       {...props}
       aria-hidden={ariaHidden}
       ref={ref}
-      className={cn(block({ svg: true, dense }), className)}
+      className={iconClasses({ type: "svg", dense }, className)}
       focusable={focusable}
       xmlns={xmlns}
       viewBox={viewBox}
