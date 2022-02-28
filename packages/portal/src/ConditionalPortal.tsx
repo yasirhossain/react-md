@@ -1,6 +1,7 @@
 import type { ReactElement, ReactNode } from "react";
 
 import type { PortalInto } from "./getContainer";
+import { LegacyPortal } from "./LegacyPortal";
 import { Portal } from "./Portal";
 
 /**
@@ -48,9 +49,16 @@ export function ConditionalPortal({
     return <>{children}</>;
   }
 
-  return (
-    <Portal into={portalInto} intoId={portalIntoId}>
-      {children}
-    </Portal>
-  );
+  if (
+    typeof portalInto !== "undefined" ||
+    typeof portalIntoId !== "undefined"
+  ) {
+    return (
+      <LegacyPortal into={portalInto} intoId={portalIntoId}>
+        {children}
+      </LegacyPortal>
+    );
+  }
+
+  return <Portal>{children}</Portal>;
 }

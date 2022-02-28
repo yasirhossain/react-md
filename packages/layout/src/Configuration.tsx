@@ -3,6 +3,7 @@ import { NestedDialogContextProvider } from "@react-md/dialog";
 import { FormThemeOptions, FormThemeProvider } from "@react-md/form";
 import { ConfigurableIcons, IconProvider } from "@react-md/icon";
 import { MenuConfiguration, MenuConfigurationProvider } from "@react-md/menu";
+import { PortalProvider } from "@react-md/portal";
 import {
   DEFAULT_RIPPLE_CLASSNAMES,
   DEFAULT_RIPPLE_TIMEOUT,
@@ -99,37 +100,39 @@ export function Configuration({
   menuConfiguration,
 }: ConfigurationProps): ReactElement {
   return (
-    <Dir defaultDir={defaultDir}>
-      <AppSizeListener
-        defaultSize={defaultSize}
-        onChange={onAppResize}
-        phoneMaxWidth={phoneMaxWidth}
-        tabletMinWidth={tabletMinWidth}
-        tabletMaxWidth={tabletMaxWidth}
-        desktopMinWidth={desktopMinWidth}
-        desktopLargeMinWidth={desktopLargeMinWidth}
-      >
-        <NestedDialogContextProvider>
-          <UserInteractionModeListener>
-            <StatesConfig
-              disableRipple={disableRipple}
-              disableProgrammaticRipple={disableProgrammaticRipple}
-              rippleTimeout={rippleTimeout}
-              rippleClassNames={rippleClassNames}
-            >
-              <HoverModeProvider {...hoverMode}>
-                <IconProvider {...icons}>
-                  <FormThemeProvider {...formTheme}>
-                    <MenuConfigurationProvider {...menuConfiguration}>
-                      {children}
-                    </MenuConfigurationProvider>
-                  </FormThemeProvider>
-                </IconProvider>
-              </HoverModeProvider>
-            </StatesConfig>
-          </UserInteractionModeListener>
-        </NestedDialogContextProvider>
-      </AppSizeListener>
-    </Dir>
+    <PortalProvider>
+      <Dir defaultDir={defaultDir}>
+        <AppSizeListener
+          defaultSize={defaultSize}
+          onChange={onAppResize}
+          phoneMaxWidth={phoneMaxWidth}
+          tabletMinWidth={tabletMinWidth}
+          tabletMaxWidth={tabletMaxWidth}
+          desktopMinWidth={desktopMinWidth}
+          desktopLargeMinWidth={desktopLargeMinWidth}
+        >
+          <NestedDialogContextProvider>
+            <UserInteractionModeListener>
+              <StatesConfig
+                disableRipple={disableRipple}
+                disableProgrammaticRipple={disableProgrammaticRipple}
+                rippleTimeout={rippleTimeout}
+                rippleClassNames={rippleClassNames}
+              >
+                <HoverModeProvider {...hoverMode}>
+                  <IconProvider {...icons}>
+                    <FormThemeProvider {...formTheme}>
+                      <MenuConfigurationProvider {...menuConfiguration}>
+                        {children}
+                      </MenuConfigurationProvider>
+                    </FormThemeProvider>
+                  </IconProvider>
+                </HoverModeProvider>
+              </StatesConfig>
+            </UserInteractionModeListener>
+          </NestedDialogContextProvider>
+        </AppSizeListener>
+      </Dir>
+    </PortalProvider>
   );
 }
