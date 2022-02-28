@@ -1,0 +1,7 @@
+$rmd-theme-dark-elevation: true;
+
+@import '~@react-md/divider/dist/mixins';
+
+.divider {
+  @include rmd-divider-theme-update-var(spacing, 6rem auto 2rem);
+}

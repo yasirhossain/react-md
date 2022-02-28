@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ComponentType, ReactNode } from "react";
 import { PhoneConfiguration } from "components/Phone/Phone";
 import { ConditionalFullPageDialogProps } from "components/ConditionalFullPageDialog";
 
@@ -81,6 +81,9 @@ export interface DemoConfig extends DemoOptions {
    * or inline depending on the other flags.
    */
   children: ReactNode;
+
+  Children?: ComponentType;
+  getChildren?(): Promise<ComponentType>;
 }
 
 export interface DemoProps extends DemoConfig {
@@ -100,7 +103,7 @@ export interface DemoPageConfig extends DemoOptions {
   /**
    * The demos to display on the page.
    */
-  demos: DemoConfig[];
+  demos: readonly DemoConfig[];
 
   /**
    * Any additional fonts that should be loaded for this page.

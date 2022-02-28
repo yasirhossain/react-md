@@ -1,0 +1,25 @@
+@import '~@react-md/utils/dist/mixins';
+@import '~@react-md/sheet/dist/variables';
+@import './variables';
+
+.container {
+  @include rmd-utils-tablet-media {
+    @include rmd-utils-rtl-auto(margin-right, $toc-width, auto);
+
+    padding: 0 $demo-padding-extra;
+
+    :global .code--counted {
+      width: calc(100vw - #{$demo-padding-extra * 2});
+    }
+  }
+
+  @include rmd-utils-desktop-media {
+    :global .code--counted {
+      $offset: $rmd-sheet-static-width + $toc-width + ($demo-padding-extra * 2);
+
+      width: calc(100vw - #{$offset});
+    }
+  }
+
+  padding: 0 $demo-padding;
+}
