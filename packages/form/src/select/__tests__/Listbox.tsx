@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 
-import { Listbox } from "../Listbox";
-import { getOptionId } from "../utils";
+import { Listbox } from "../Listbox_old";
+import { getOptionId } from "../utils_old";
 
 const options = Array.from({ length: 10 }, (_, i) => `Option ${i + 1}`);
 const options2 = options.map((opt, i) => ({

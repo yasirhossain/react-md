@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { render, fireEvent } from "@testing-library/react";
 
-import { Select } from "../Select";
+import { Select } from "../Select_ol";
 
 const PROPS = {
   id: "select",

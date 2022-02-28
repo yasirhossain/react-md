@@ -30,13 +30,13 @@ import {
   TextFieldContainerOptions,
 } from "../text-field/TextFieldContainer";
 import { useFocusState } from "../useFocusState";
-import { Listbox, ListboxOptions } from "./Listbox";
+import { Listbox, ListboxOptions } from "./Listbox_old";
 import {
   defaultIsOptionDisabled,
   getDisplayLabel as DEFAULT_GET_DISPLAY_LABEL,
   getOptionId as DEFAULT_GET_OPTION_ID,
   getOptionLabel as DEFAULT_GET_OPTION_LABEL,
-} from "./utils";
+} from "./utils_old";
 
 type FakeSelectAttributes = Omit<
   HTMLAttributes<HTMLDivElement>,
