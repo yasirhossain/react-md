@@ -21,8 +21,8 @@ import Avatar from '@mui/material/Avatar';
 import AvatarPicker from './AvatarPicker';
 
 function Chat(props) {
-  const { user, authenticated } = props;
-  const currentUser = user;
+  const { user, setUser, authenticated } = props;
+  const [currentUser, setCurrentUser] = useState(null);
   const messagesRef = db.collection('messages');
   const query = messagesRef.orderBy('createdAt').limitToLast(50);
   const [messages, setMessages] = useCollectionData(query, { idField: 'id' });
@@ -35,9 +35,10 @@ function Chat(props) {
   const [replyMessage, setReplyMessage] = useState(null);
   const messagesEndRef = useRef();
   const isInitialMount = useRef(true);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    setCurrentUser(user);
     setTimeout(function () {
       if (isInitialMount.current) {
         isInitialMount.current = false;
@@ -46,7 +47,7 @@ function Chat(props) {
     }, 1000);
 
     //console.log(messages);
-  }, [messages]);
+  }, [user, messages]);
 
   function validateMessage(message) {
     const messageLength = message.length;
@@ -114,7 +115,9 @@ function Chat(props) {
     const { uid, role, displayName, avatarUrl, chatName } = currentUser;
     const likes = 0;
 
-    await messagesRef.add({
+    console.log(currentUser);
+
+    let tempMessage = {
       text: message,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
@@ -123,8 +126,11 @@ function Chat(props) {
       avatarUrl,
       chatName,
       likes,
-    });
+    };
 
+    console.log(tempMessage);
+
+    await messagesRef.add(tempMessage);
     firebase.analytics().logEvent('chat_message_sent');
   };
 
@@ -156,7 +162,12 @@ function Chat(props) {
 
   return (
     <>
-      <AvatarPicker open={open} setOpen={setOpen} user={currentUser} />
+      <AvatarPicker
+        open={open}
+        setOpen={setOpen}
+        user={currentUser}
+        setUser={setUser}
+      />
       <main className="chat">
         {messages &&
           messages.map((msg) => (

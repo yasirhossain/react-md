@@ -24,7 +24,13 @@ import { auth } from '../modules/firebase';
 import { isAdmin } from '../helpers/helperFunctions';
 
 function Header(props) {
-  const currentUser = props.user;
+  const user = props.user;
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    setCurrentUser(user);
+  }, [user]);
 
   function SignIn() {
     const signInWithGoogle = () => {
@@ -79,18 +85,18 @@ function Header(props) {
                 >
                   <Avatar
                     sx={{ width: 32, height: 32 }}
-                    src={currentUser.avatarUrl}
+                    src={currentUser && currentUser.avatarUrl}
                   />
                 </Badge>,
               ]
             ) : (
               <Avatar
                 sx={{ width: 32, height: 32 }}
-                src={currentUser.avatarUrl}
+                src={currentUser && currentUser.avatarUrl}
                 key="avatar-user"
               />
             )}
-            <ListItemText primary={currentUser.displayName} />
+            <ListItemText primary={currentUser && currentUser.displayName} />
           </ListItem>
         </List>
 

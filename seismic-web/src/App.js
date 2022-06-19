@@ -26,8 +26,8 @@ function App() {
 
   useEffect(() => {
     // Set User
+    //console.log(currentUser);
     setCurrentUser(getSelf(user));
-
     // TODO: Set Current Campaign
     // setCurrentCampaign(campaigns && campaigns[0]);
   }, [user, campaigns]);
@@ -36,7 +36,11 @@ function App() {
     <div className="App">
       <Header user={currentUser} />
       <section className="body">
-        <Routes user={currentUser} campaigns={campaigns} />
+        <Routes
+          user={currentUser}
+          setUser={setCurrentUser}
+          campaigns={campaigns}
+        />
       </section>
     </div>
   );

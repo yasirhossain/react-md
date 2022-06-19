@@ -7,12 +7,19 @@ import Like from './Like';
 function ChatMessage(props) {
   const { text, uid, avatarUrl, chatName, createdAt, role, likes } =
     props.message;
-  const currentUser = props.user;
+  const user = props.user;
   const reply = props.reply;
   const replyMessage = props.replyMessage;
 
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    setCurrentUser(user);
+  }, [user]);
+
   const seconds = createdAt ? moment(createdAt.toDate()) : '';
-  const messageClass = uid === currentUser.uid ? 'sent' : 'received';
+  const messageClass =
+    uid === currentUser && currentUser.uid ? 'sent' : 'received';
 
   return (
     <>

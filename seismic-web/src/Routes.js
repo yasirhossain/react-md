@@ -13,7 +13,13 @@ export default function Routes(props) {
         <Route index element={<Events campaigns={props.campaigns} />} />
         <Route
           path=":eventId"
-          element={<Event user={props.user} campaigns={props.campaigns} />}
+          element={
+            <Event
+              user={props.user}
+              setUser={props.setUser}
+              campaigns={props.campaigns}
+            />
+          }
         />
       </Route>
       <Route

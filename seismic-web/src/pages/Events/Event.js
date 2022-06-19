@@ -2,8 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 
-import { getSelf } from '../../modules/locaUser';
-
 import { db, auth, analytics } from '../../modules/firebase';
 import firebase from 'firebase/compat/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -22,19 +20,22 @@ import '../../styles/Event.scss';
 function Event(props) {
   const user = props.user;
   const campaigns = props.campaigns;
+  const setUser = props.setUser;
 
   const { eventId } = useParams();
   const navigate = useNavigate();
   const [queryParams] = useSearchParams();
   // const selectedColor = queryParams.get("color");
 
+  const [currentUser, setCurrentUser] = useState(null);
   const [currentCampaign, setCurrentCampaign] = useState(null);
 
   useEffect(() => {
+    setCurrentUser(user);
     setCurrentCampaign(
       campaigns && campaigns.find((c) => slugify(c.title) === eventId)
     );
-  }, [campaigns]);
+  }, [user, campaigns]);
 
   return (
     <div className="event">
@@ -70,7 +71,7 @@ function Event(props) {
         </div>
       </section>
       <section className="rail">
-        <Chat user={user} authenticated={auth} />
+        <Chat user={currentUser} setUser={setUser} authenticated={auth} />
       </section>
     </div>
   );

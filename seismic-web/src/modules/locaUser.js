@@ -4,13 +4,21 @@ const setSelf = (user) => {
   localStorage.setItem('seismicChatUser', JSON.stringify(user));
 };
 
+export const updateSelf = (user) => {
+  localStorage.setItem('seismicChatUser', JSON.stringify(user));
+  getSelf(user);
+};
+
 export const getSelf = (globalUser) => {
   const firebaseUser = globalUser;
   const localUser = JSON.parse(localStorage.getItem('seismicChatUser'));
 
+  if (localUser !== null && firebaseUser !== null) {
+    return localUser;
+  }
   // Returning User Who Has Not Signed In
   // User info is pulled from local storage
-  if (localUser !== null && firebaseUser === null) {
+  else if (localUser !== null && firebaseUser === null) {
     //console.log("This is a returning user who has not signed in.");
     //setCurrentUser(JSON.parse(localUser));
     return localUser;

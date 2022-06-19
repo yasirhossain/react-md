@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 
 import '../styles/AvatarPicker.scss';
 
+import { updateSelf } from '../modules/locaUser';
+
 import { db, analytics } from '../modules/firebase';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -26,7 +28,7 @@ import { nameGenerator } from '../helpers/nameGenerator';
 import { MAX_CHAT_CAR_COUNT } from '../helpers/constants';
 
 function AvatarPicker(props) {
-  const { open, setOpen, user } = props;
+  const { open, setOpen, user, setUser } = props;
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -54,8 +56,13 @@ function AvatarPicker(props) {
     if (!validateChatName()) {
       setShowErrors(true);
     } else {
-      // TODO: update chatname / avatar to user identity
-      // setSelf(user);
+      let updatedUser = {
+        ...user,
+        avatarUrl: avatar,
+        chatName: chatName,
+      };
+      console.log(updatedUser);
+      setUser(updateSelf(updatedUser));
       handleClose();
     }
   };
