@@ -4,3 +4,18 @@
   align-content: center;
   width: 100%;
 }
+
+@media screen and (max-width: 991px) {
+  .App .event {
+    flex-direction: column;
+    section {
+      &.main {
+        width: 100%;
+        min-height: 35vh;
+      }
+      &.rail {
+        min-height: calc(65vh - 70px);
+      }
+    }
+  }
+}

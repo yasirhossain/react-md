@@ -3,9 +3,9 @@
     position: absolute;
     z-index: 2;
     //height: 100%;
-    height: calc(90vh);
+    height: calc(100vh - 70px);
     width: 70%;
-    top: 10vh;
+    top: 70px;
     left: 0;
     color: #fff;
     background: rgba(13, 35, 72, 0.76);
@@ -158,6 +158,19 @@
 
       .bar {
         background: gray !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .App .trivia {
+    > div {
+      height: calc(35vh);
+      width: 100%;
+      min-height: 35vh;
+      h2 {
+        font-size: 0.9em;
       }
     }
   }

@@ -7,6 +7,7 @@
   flex-direction: column;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 
   .MuiCardContent-root .MuiTypography-h5 {
     white-space: nowrap;
@@ -29,6 +30,7 @@
 
     &.body {
       overflow: hidden;
+      height: calc(100vh - 70px);
     }
 
     &.main {
@@ -113,10 +115,18 @@
   .App {
     section {
       &.main {
-        width: 100%;
-        display: none;
+        .text-block {
+          h1 {
+            font-size: 2em;
+          }
+          h2 {
+            font-size: 1.75em;
+          }
+          p {
+            width: 100%;
+          }
+        }
       }
-
       &.rail {
         width: 100%;
       }

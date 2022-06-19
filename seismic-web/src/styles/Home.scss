@@ -5,7 +5,7 @@
   justify-content: center;
   width: 100%;
   background-color: #fff;
-  height: 90vh;
+  height: 100%;
   overflow: hidden;
   //background: no-repeat center 100%
   //  url('https://firebasestorage.googleapis.com/v0/b/showintel-8dcf8.appspot.com/o/wallpaper.png?alt=media&token=8ca3cfe1-a518-4e0e-a0c7-fd99a5ae0532');
@@ -174,5 +174,15 @@ $moon-color: #007ddb;
 @keyframes orbit {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .App {
+    .body {
+      .home {
+        min-height: calc(100% - 70px);
+      }
+    }
   }
 }
