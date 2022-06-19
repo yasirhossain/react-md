@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { db, analytics } from '../../../modules/firebase';
+import { db, analytics } from '../../modules/firebase';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import '../../../styles/Trivia.scss';
+import '../../styles/Trivia.scss';
 
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';

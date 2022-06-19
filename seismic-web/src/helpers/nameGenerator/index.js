@@ -4,8 +4,8 @@ import { nouns } from './nouns';
 
 const adjs = adjectives.terms;
 const pronouns = nouns.terms;
-const randomAdj = adjs[Math.floor(Math.random() * adjs.length)];
-const randomPronoun = pronouns[Math.floor(Math.random() * pronouns.length)];
 
 export const nameGenerator = () =>
-  `${randomAdj} ${randomPronoun} ${_random(1, 25)}`;
+  `${adjs[Math.floor(Math.random() * adjs.length)]} ${
+    pronouns[Math.floor(Math.random() * pronouns.length)]
+  } ${_random(1, 25)}`;

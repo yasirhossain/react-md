@@ -18,6 +18,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import Avatar from '@mui/material/Avatar';
 
+import AvatarPicker from './AvatarPicker';
+
 function Chat(props) {
   const { user, authenticated } = props;
   const currentUser = user;
@@ -33,6 +35,7 @@ function Chat(props) {
   const [replyMessage, setReplyMessage] = useState(null);
   const messagesEndRef = useRef();
   const isInitialMount = useRef(true);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     setTimeout(function () {
@@ -143,8 +146,17 @@ function Chat(props) {
     });
   };
 
+  const handleAvatarPickerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleAvatarPickerClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+      <AvatarPicker open={open} setOpen={setOpen} user={currentUser} />
       <main className="chat">
         {messages &&
           messages.map((msg) => (
@@ -163,6 +175,7 @@ function Chat(props) {
           <Avatar
             sx={{ width: 35, height: 35 }}
             src={currentUser && currentUser.avatarUrl}
+            onClick={handleAvatarPickerOpen}
           />
           <input
             value={message}

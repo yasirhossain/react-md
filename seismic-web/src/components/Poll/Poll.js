@@ -2,7 +2,7 @@ import React, { setState, useState, useEffect } from 'react';
 
 import cuid from 'cuid';
 
-import { db, analytics } from '../../../modules/firebase';
+import { db, analytics } from '../../modules/firebase';
 import firebase from 'firebase/compat/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';

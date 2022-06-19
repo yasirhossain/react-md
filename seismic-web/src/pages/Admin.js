@@ -12,8 +12,8 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import Chat from '../components/Chat';
 
 // import ChatControls from '../components/Tools/Chat/ChatControls';
-import Poll from '../components/Tools/Poll/Poll';
-import Trivia from '../components/Tools/Poll/Trivia';
+import Poll from '../components/Poll/Poll';
+import Trivia from '../components/Poll/Trivia';
 
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
