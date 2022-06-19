@@ -115,8 +115,6 @@ function Chat(props) {
     const { uid, role, displayName, avatarUrl, chatName } = currentUser;
     const likes = 0;
 
-    console.log(currentUser);
-
     let tempMessage = {
       text: message,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -127,8 +125,6 @@ function Chat(props) {
       chatName,
       likes,
     };
-
-    console.log(tempMessage);
 
     await messagesRef.add(tempMessage);
     firebase.analytics().logEvent('chat_message_sent');

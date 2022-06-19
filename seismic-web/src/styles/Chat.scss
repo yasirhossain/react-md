@@ -121,6 +121,10 @@ form button {
 
   .MuiAvatar-root {
     margin-left: 5px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   input {
