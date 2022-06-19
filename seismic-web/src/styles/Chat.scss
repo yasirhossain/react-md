@@ -8,6 +8,10 @@ main {
   align-items: center;
   // height: 100%;
 
+  > :last-child {
+    margin-bottom: 50px;
+  }
+
   ul,
   li {
     text-align: left;
