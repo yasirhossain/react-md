@@ -28,7 +28,7 @@ function Trivia() {
 
   function loadTrivia() {
     if (trivia && trivia.length > 0) {
-      setCurrentTrivia(trivia[0]);
+      setCurrentTrivia(trivia[trivia.length - 1]);
       setViewable(true);
     }
   }
