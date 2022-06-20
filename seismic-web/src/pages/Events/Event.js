@@ -1,6 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
+
+import { UserContext, EventsContext } from '../../Context';
 
 import { db, auth, analytics } from '../../modules/firebase';
 import firebase from 'firebase/compat/app';
@@ -18,7 +20,6 @@ import { slugify } from '../../helpers/helperFunctions';
 import '../../styles/Event.scss';
 
 function Event(props) {
-  const user = props.user;
   const campaigns = props.campaigns;
   const setUser = props.setUser;
 
@@ -26,16 +27,13 @@ function Event(props) {
   const navigate = useNavigate();
   const [queryParams] = useSearchParams();
   // const selectedColor = queryParams.get("color");
-
-  const [currentUser, setCurrentUser] = useState(null);
   const [currentCampaign, setCurrentCampaign] = useState(null);
 
   useEffect(() => {
-    setCurrentUser(user);
     setCurrentCampaign(
       campaigns && campaigns.find((c) => slugify(c.title) === eventId)
     );
-  }, [user, campaigns]);
+  }, [campaigns]);
 
   return (
     <div className="event">
@@ -71,7 +69,7 @@ function Event(props) {
         </div>
       </section>
       <section className="rail">
-        <Chat user={currentUser} setUser={setUser} authenticated={auth} />
+        <Chat />
       </section>
     </div>
   );

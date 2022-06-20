@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
+import { UserContext, EventsContext } from './Context';
 
 import Routes from './Routes';
 
@@ -11,6 +12,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { getSelf } from './modules/locaUser';
 
 import Header from './components/Header';
+import { useContext } from 'react';
 
 function App() {
   // Load User
@@ -26,23 +28,21 @@ function App() {
 
   useEffect(() => {
     // Set User
-    //console.log(currentUser);
     setCurrentUser(getSelf(user));
+
     // TODO: Set Current Campaign
     // setCurrentCampaign(campaigns && campaigns[0]);
-  }, [user, campaigns]);
+  }, [campaigns]);
 
   return (
-    <div className="App">
-      <Header user={currentUser} />
-      <section className="body">
-        <Routes
-          user={currentUser}
-          setUser={setCurrentUser}
-          campaigns={campaigns}
-        />
-      </section>
-    </div>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <div className="App">
+        <Header user={currentUser} />
+        <section className="body">
+          <Routes campaigns={campaigns} />
+        </section>
+      </div>
+    </UserContext.Provider>
   );
 }
 

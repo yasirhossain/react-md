@@ -1,5 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
+import { UserContext, EventsContext } from '../Context';
 
 import { LOGO } from '../helpers/constants';
 
@@ -24,13 +26,7 @@ import { auth } from '../modules/firebase';
 import { isAdmin } from '../helpers/helperFunctions';
 
 function Header(props) {
-  const user = props.user;
-
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    setCurrentUser(user);
-  }, [user]);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   function SignIn() {
     const signInWithGoogle = () => {

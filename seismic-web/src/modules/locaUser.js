@@ -1,4 +1,5 @@
 import { ANONYMOUS_USER } from '../helpers/constants';
+import { auth } from '../modules/firebase';
 
 const setSelf = (user) => {
   localStorage.setItem('seismicChatUser', JSON.stringify(user));
@@ -6,19 +7,16 @@ const setSelf = (user) => {
 
 export const updateSelf = (user) => {
   localStorage.setItem('seismicChatUser', JSON.stringify(user));
-  getSelf(user);
+  //getSelf(user);
 };
 
-export const getSelf = (globalUser) => {
-  const firebaseUser = globalUser;
+export const getSelf = (user) => {
+  const firebaseUser = user;
   const localUser = JSON.parse(localStorage.getItem('seismicChatUser'));
 
-  if (localUser !== null && firebaseUser !== null) {
-    return localUser;
-  }
   // Returning User Who Has Not Signed In
   // User info is pulled from local storage
-  else if (localUser !== null && firebaseUser === null) {
+  if (localUser !== null && firebaseUser === null) {
     //console.log("This is a returning user who has not signed in.");
     //setCurrentUser(JSON.parse(localUser));
     return localUser;
