@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+
+import { UserContext, EventsContext } from '../Context';
 
 import '../styles/Admin.scss';
 
@@ -6,8 +8,6 @@ import { isAdmin } from '../helpers/helperFunctions';
 
 import { auth, analytics, db } from '../modules/firebase';
 import firebase from 'firebase/compat/app';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import Chat from '../components/Chat';
 
@@ -20,8 +20,9 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
 function Admin(props) {
-  const user = props.user;
   const campaigns = props.campaigns;
+
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const [isLive, setIsLive] = useState(false);
   const [chatEnabled, setChatEnabled] = useState(true);
@@ -30,7 +31,7 @@ function Admin(props) {
 
   return (
     <div className="admin">
-      {isAdmin(user)
+      {isAdmin(currentUser)
         ? [
             <section key="isadmin">
               <section className="main">
@@ -41,10 +42,10 @@ function Admin(props) {
                     columns={{ xs: 1, sm: 2, md: 12 }}
                   >
                     <Grid item xs={1} sm={2} md={4} key="poll">
-                      <Poll user={user} />
+                      <Poll user={currentUser} />
                     </Grid>
                     <Grid item xs={1} sm={2} md={4} key="trivia">
-                      <Trivia user={user} key="trivia" />
+                      <Trivia user={currentUser} key="trivia" />
                     </Grid>
                   </Grid>
                 </Container>
@@ -52,7 +53,7 @@ function Admin(props) {
               {chatEnabled ? (
                 [
                   <section className="rail" key="chat-panel">
-                    <Chat user={user} authenticated={auth} />
+                    <Chat user={currentUser} authenticated={auth} />
                   </section>,
                 ]
               ) : (

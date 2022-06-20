@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { UserContext, EventsContext } from '../Context';
 
 import '../styles/Chat.scss';
 
@@ -21,8 +22,7 @@ import Avatar from '@mui/material/Avatar';
 import AvatarPicker from './AvatarPicker';
 
 function Chat(props) {
-  const { user, setUser, authenticated } = props;
-  const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const messagesRef = db.collection('messages');
   const query = messagesRef.orderBy('createdAt').limitToLast(50);
   const [messages, setMessages] = useCollectionData(query, { idField: 'id' });
@@ -38,7 +38,6 @@ function Chat(props) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setCurrentUser(user);
     setTimeout(function () {
       if (isInitialMount.current) {
         isInitialMount.current = false;
@@ -47,7 +46,7 @@ function Chat(props) {
     }, 1000);
 
     //console.log(messages);
-  }, [user, messages]);
+  }, [messages]);
 
   function validateMessage(message) {
     const messageLength = message.length;
@@ -158,12 +157,7 @@ function Chat(props) {
 
   return (
     <>
-      <AvatarPicker
-        open={open}
-        setOpen={setOpen}
-        user={currentUser}
-        setUser={setUser}
-      />
+      <AvatarPicker open={open} setOpen={setOpen} />
       <main className="chat">
         {messages &&
           messages.map((msg) => (

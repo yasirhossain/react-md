@@ -1,4 +1,5 @@
 import { Routes as BaseRoutes, Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 import Events from './pages/Events/Events';
 import Event from './pages/Events/Event';
@@ -13,19 +14,10 @@ export default function Routes(props) {
         <Route index element={<Events campaigns={props.campaigns} />} />
         <Route
           path=":eventId"
-          element={
-            <Event
-              user={props.user}
-              setUser={props.setUser}
-              campaigns={props.campaigns}
-            />
-          }
+          element={<Event campaigns={props.campaigns} />}
         />
       </Route>
-      <Route
-        path="admin"
-        element={<Admin user={props.user} campaigns={props.campaigns} />}
-      />
+      <Route path="admin" element={<Admin campaigns={props.campaigns} />} />
       <Route path="metaverse" element={<Metaverse />} />
     </BaseRoutes>
   );

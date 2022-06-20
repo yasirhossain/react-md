@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext, EventsContext } from '../Context';
 
 import '../styles/AvatarPicker.scss';
 
-import { updateSelf } from '../modules/locaUser';
+import { updateSelf, getSelf } from '../modules/locaUser';
 
 import { db, analytics } from '../modules/firebase';
 import firebase from 'firebase/compat/app';
@@ -28,9 +29,11 @@ import { nameGenerator } from '../helpers/nameGenerator';
 import { MAX_CHAT_CAR_COUNT } from '../helpers/constants';
 
 function AvatarPicker(props) {
-  const { open, setOpen, user, setUser } = props;
+  const { open, setOpen } = props;
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const [chatName, setChatName] = useState(null);
   const [avatar, setAvatar] = useState(null);
@@ -38,17 +41,17 @@ function AvatarPicker(props) {
   const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
-    setAvatar(user && user.avatarUrl);
-    setChatName(user && user.chatName);
-  }, [user]);
+    setAvatar(currentUser && currentUser.avatarUrl);
+    setChatName(currentUser && currentUser.chatName);
+  }, [currentUser]);
 
   const handleClose = () => {
     setOpen(false);
   };
 
   const cancel = () => {
-    setAvatar(user.avatarUrl);
-    setChatName(user.chatName);
+    setAvatar(currentUser.avatarUrl);
+    setChatName(currentUser.chatName);
     handleClose();
   };
 
@@ -57,12 +60,12 @@ function AvatarPicker(props) {
       setShowErrors(true);
     } else {
       let updatedUser = {
-        ...user,
+        ...currentUser,
         avatarUrl: avatar,
         chatName: chatName,
       };
-      console.log(updatedUser);
-      setUser(updateSelf(updatedUser));
+      setCurrentUser(updatedUser);
+      updateSelf(updatedUser);
       handleClose();
     }
   };
