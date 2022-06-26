@@ -82,16 +82,6 @@ function Trivia() {
                   <h1>Question</h1>
                 </div>
                 <div className="right">
-                  <div className="timer-wrapper">
-                    <CountdownCircleTimer
-                      isPlaying
-                      duration={TRIVIA_TIMER}
-                      colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-                      colorsTime={[10, 6, 3, 0]}
-                    >
-                      {RenderTime}
-                    </CountdownCircleTimer>
-                  </div>
                   <CloseIcon className="close" onClick={closeTrivia} />
                 </div>
               </div>
@@ -151,7 +141,30 @@ function Trivia() {
                     ? [<p>You got it right! +{currentTrivia.value} points</p>]
                     : null}
                   {!isCorrect && !active
-                    ? [<p>Incorrect. Better luck next time. +0 points</p>]
+                    ? [<p>Better luck next time. +0 points</p>]
+                    : null}
+                  {active
+                    ? [
+                        <div className="timer-wrapper">
+                          <CountdownCircleTimer
+                            isPlaying
+                            size={35}
+                            strokeWidth={2}
+                            duration={TRIVIA_TIMER}
+                            trailColor={'#fff'}
+                            colors={[
+                              '#004777',
+                              '#F7B801',
+                              '#A30000',
+                              '#A30000',
+                            ]}
+                            colorsTime={[10, 6, 3, 0]}
+                            onComplete={() => setActive(false)}
+                          >
+                            {RenderTime}
+                          </CountdownCircleTimer>
+                        </div>,
+                      ]
                     : null}
                 </div>
               </div>
