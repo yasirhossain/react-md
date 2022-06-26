@@ -10,6 +10,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import { RenderTime } from '../Countdown';
+import { TRIVIA_TIMER } from '../../helpers/constants';
+
 function Trivia() {
   const triviaRef = db.collection('polls').where('type', '==', 'TRIVIA');
 
@@ -74,6 +78,16 @@ function Trivia() {
         ? [
             <div key={currentTrivia.id}>
               <CloseIcon className="close" onClick={closeTrivia} />
+              <div className="timer-wrapper">
+                <CountdownCircleTimer
+                  isPlaying
+                  duration={TRIVIA_TIMER}
+                  colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                  colorsTime={[10, 6, 3, 0]}
+                >
+                  {RenderTime}
+                </CountdownCircleTimer>
+              </div>
               <div className="component-container">
                 <h2>{currentTrivia.title}</h2>
                 <ul className="list-unstyled">

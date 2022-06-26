@@ -9,6 +9,7 @@ export const ADMIN_USERS = [
 ];
 
 export const MAX_CHAT_CAR_COUNT = 100;
+export const TRIVIA_TIMER = 30;
 
 export const LIVING_ROOM_IMG =
   'https://firebasestorage.googleapis.com/v0/b/showintel-8dcf8.appspot.com/o/living-room.jpg?alt=media&token=f85daff0-bc7a-4138-9ae8-52036e9329d8';
