@@ -36,6 +36,8 @@
     height: 100%;
     width: 100%;
     z-index: 0;
+    transition: all 0.2s;
+    transition-timing-function: ease-in-out;
   }
 
   &.live {

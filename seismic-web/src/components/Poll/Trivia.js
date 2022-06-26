@@ -77,16 +77,23 @@ function Trivia() {
       {viewable
         ? [
             <div key={currentTrivia.id}>
-              <CloseIcon className="close" onClick={closeTrivia} />
-              <div className="timer-wrapper">
-                <CountdownCircleTimer
-                  isPlaying
-                  duration={TRIVIA_TIMER}
-                  colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-                  colorsTime={[10, 6, 3, 0]}
-                >
-                  {RenderTime}
-                </CountdownCircleTimer>
+              <div className="header">
+                <div className="left">
+                  <h1>Question</h1>
+                </div>
+                <div className="right">
+                  <div className="timer-wrapper">
+                    <CountdownCircleTimer
+                      isPlaying
+                      duration={TRIVIA_TIMER}
+                      colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                      colorsTime={[10, 6, 3, 0]}
+                    >
+                      {RenderTime}
+                    </CountdownCircleTimer>
+                  </div>
+                  <CloseIcon className="close" onClick={closeTrivia} />
+                </div>
               </div>
               <div className="component-container">
                 <h2>{currentTrivia.title}</h2>
