@@ -31,7 +31,7 @@ export const VideoPlayer = (props) => {
   }, []);
 
   return (
-    <div style={{ width: '98%' }}>
+    <div className="video-player">
       <video
         style={{ width: '100%' }}
         ref={videoPlayerRef}

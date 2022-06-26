@@ -3,11 +3,61 @@
   align-items: center;
   align-content: center;
   width: 100%;
+  position: relative;
+
+  section {
+    &.main {
+      position: relative;
+      z-index: 1;
+
+      .text-block {
+        z-index: 1;
+      }
+    }
+    &.rail {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .video-player {
+    position: relative;
+    z-index: 1;
+    width: 98%;
+
+    .video-js {
+      padding-top: 54% !important;
+    }
+  }
+
+  .bg {
+    background-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+  }
+
+  &.live {
+    section {
+      &.main {
+        .text-block {
+          display: none;
+        }
+      }
+    }
+    .bg {
+      filter: blur(25px);
+      -webkit-filter: blur(25px);
+      background-size: 150%;
+    }
+  }
 }
 
 @media screen and (max-width: 991px) {
   .App .event {
     flex-direction: column;
+
     section {
       &.main {
         width: 100%;

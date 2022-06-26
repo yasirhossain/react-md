@@ -36,24 +36,17 @@ function Event(props) {
   }, [campaigns]);
 
   return (
-    <div className="event">
-      <section
-        className="main"
-        style={{
-          backgroundImage: currentCampaign
-            ? `url(${currentCampaign.banner})`
-            : 'none',
-        }}
-      >
+    <div
+      className={
+        (currentCampaign && currentCampaign.alwaysOn.video ? 'live ' : '') +
+        'event'
+      }
+    >
+      <section className="main">
         <Trivia />
-        {/*
-          <img
-            className="qr-code"
-            src="https://firebasestorage.googleapis.com/v0/b/showintel-8dcf8.appspot.com/o/qr-test.png?alt=media&token=d4416410-3f02-4652-b3e4-8eaa65b7d00e"
-            alt="Flow Code QR"
-          />
-          <VideoPlayer video={MOVIES[0]} />
-        */}
+        {currentCampaign && currentCampaign.alwaysOn.video
+          ? [<VideoPlayer video={currentCampaign.video.source} />]
+          : null}
         <div
           className="text-block"
           style={{
@@ -67,6 +60,14 @@ function Event(props) {
           <h2>{currentCampaign && currentCampaign.title}</h2>
           <p>{currentCampaign && currentCampaign.description}</p>
         </div>
+        <div
+          className="bg"
+          style={{
+            backgroundImage: currentCampaign
+              ? `url(${currentCampaign.banner})`
+              : 'none',
+          }}
+        ></div>
       </section>
       <section className="rail">
         <Chat />
