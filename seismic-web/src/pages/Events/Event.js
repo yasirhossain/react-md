@@ -28,6 +28,7 @@ function Event(props) {
   const [queryParams] = useSearchParams();
   // const selectedColor = queryParams.get("color");
   const [currentCampaign, setCurrentCampaign] = useState(null);
+  const [currentTime, setCurrentTime] = useState(null);
 
   useEffect(() => {
     setCurrentCampaign(
@@ -43,9 +44,14 @@ function Event(props) {
       }
     >
       <section className="main">
-        <Trivia />
+        <Trivia currentTime={currentTime} />
         {currentCampaign && currentCampaign.alwaysOn.video
-          ? [<VideoPlayer video={currentCampaign.video.source} />]
+          ? [
+              <VideoPlayer
+                video={currentCampaign.video.source}
+                setCurrentTime={setCurrentTime}
+              />,
+            ]
           : null}
         <div
           className="text-block"

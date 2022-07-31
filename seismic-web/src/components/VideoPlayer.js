@@ -4,8 +4,8 @@ import 'video.js/dist/video-js.css';
 
 export const VideoPlayer = (props) => {
   const videoPlayerRef = useRef(null); // Instead of ID
-  const [currentTime, setCurrentTime] = useState(null);
   const videoSrc = props.video;
+  const setCurrentTime = props.setCurrentTime;
   const videoJSOptions = {
     autoplay: 'muted',
     controls: true,

@@ -14,9 +14,10 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { RenderTime } from '../Countdown';
 import { TRIVIA_TIMER } from '../../helpers/constants';
 
-function Trivia() {
-  const triviaRef = db.collection('polls').where('type', '==', 'TRIVIA');
+function Trivia(props) {
+  const currentTime = props.currentTime;
 
+  const triviaRef = db.collection('polls').where('type', '==', 'TRIVIA');
   const [trivia] = useCollectionData(triviaRef, { idField: 'id' });
   const [currentTrivia, setCurrentTrivia] = useState(null);
   const [total, setTotal] = useState(0);
@@ -28,7 +29,8 @@ function Trivia() {
 
   useEffect(() => {
     loadTrivia();
-  }, [trivia]);
+    // console.log(currentTime);
+  }, [trivia, currentTime]);
 
   function loadTrivia() {
     if (trivia && trivia.length > 0) {
