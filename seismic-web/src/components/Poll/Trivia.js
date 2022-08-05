@@ -24,6 +24,7 @@ function Trivia() {
 
   useEffect(() => {
     loadTrivia();
+    // console.log(currentTime);
   }, [trivia]);
 
   function loadTrivia() {
