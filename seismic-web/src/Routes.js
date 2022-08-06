@@ -5,6 +5,7 @@ import Events from './pages/Events/Events';
 import Event from './pages/Events/Event';
 import Admin from './pages/Admin';
 import Metaverse from './pages/Metaverse';
+import AdBuilder from './pages/AdBuilder';
 
 export default function Routes(props) {
   return (
@@ -19,6 +20,7 @@ export default function Routes(props) {
       </Route>
       <Route path="admin" element={<Admin campaigns={props.campaigns} />} />
       <Route path="metaverse" element={<Metaverse />} />
+      <Route path="ad-builder" element={<AdBuilder />} />
     </BaseRoutes>
   );
 }
