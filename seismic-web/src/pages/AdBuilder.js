@@ -44,6 +44,7 @@ function AdBuilder() {
         ? [<ImageDropZone key="step-1" />]
         : [
             <Cropper
+              aspectRatio={16 / 9}
               style={{ height: 400, width: '100%' }}
               zoomTo={0.5}
               initialAspectRatio={1}

@@ -17,15 +17,6 @@ function ImageDropZone(props) {
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({ accept: { 'image/*': [] } });
 
-  const style = useMemo(
-    () => ({
-      ...(isFocused ? focusedStyle : {}),
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
-    }),
-    [isFocused, isDragAccept, isDragReject]
-  );
-
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
@@ -41,24 +32,21 @@ function ImageDropZone(props) {
     });
   }, []);
 
-  const onDragEnter = () => {
-    console.log('on drag enter');
-  };
-
-  const onDragLeave = () => {
-    console.log('on drag leave');
-  };
-
-  const onDragOver = () => {
-    console.log('on drag over');
-  };
-
-  // const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const style = useMemo(
+    () => ({
+      ...(isFocused ? focusedStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isFocused, isDragAccept, isDragReject]
+  );
 
   return (
     <div {...getRootProps({ style })} className="drag-n-drop">
       <input {...getInputProps()} />
-      <p>Drag 'n' drop or click to select an image</p>
+      {isDragReject
+        ? [<p>Please select an image.</p>]
+        : [<p>Click to select or drag 'n' drop an image</p>]}
     </div>
   );
 }
