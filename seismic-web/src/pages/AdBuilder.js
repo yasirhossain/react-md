@@ -41,11 +41,7 @@ function AdBuilder() {
       <h1>Create a Video Slate</h1>
 
       {!cropperVisible
-        ? [
-            <div className="drag-n-drop" key="step-1">
-              <ImageDropZone />
-            </div>,
-          ]
+        ? [<ImageDropZone key="step-1" />]
         : [
             <Cropper
               style={{ height: 400, width: '100%' }}

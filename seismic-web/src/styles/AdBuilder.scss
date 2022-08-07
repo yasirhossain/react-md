@@ -6,6 +6,24 @@
     overflow: hidden;
     padding-top: 591.44px / 1127.34px * 100%;
     background-color: gray;
+
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-width: 2px;
+    border-radius: 2px;
+    border-color: #eeeeee;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #bdbdbd;
+    outline: none;
+    transition: border 0.24s ease-in-out;
+
+    &:hover {
+      border-color: #2196f3;
+      cursor: pointer;
+    }
   }
 }
 
