@@ -41,7 +41,7 @@ function AdBuilder() {
       <h1>Create a Video Slate</h1>
 
       {!cropperVisible
-        ? [<ImageDropZone key="step-1" />]
+        ? [<ImageDropZone key="step-1" setCropperVisible={setCropperVisible} />]
         : [
             <Cropper
               aspectRatio={16 / 9}

@@ -14,8 +14,7 @@ const rejectStyle = {
 };
 
 function ImageDropZone(props) {
-  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
-    useDropzone({ accept: { 'image/*': [] } });
+  const setCropperVisible = props.setCropperVisible;
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -27,10 +26,14 @@ function ImageDropZone(props) {
         // Do whatever you want with the file contents
         const binaryStr = reader.result;
         console.log(binaryStr);
+        setCropperVisible(true);
       };
       reader.readAsArrayBuffer(file);
     });
   }, []);
+
+  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
+    useDropzone({ onDrop, accept: { 'image/*': [] } });
 
   const style = useMemo(
     () => ({
@@ -41,12 +44,18 @@ function ImageDropZone(props) {
     [isFocused, isDragAccept, isDragReject]
   );
 
+  //const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
   return (
     <div {...getRootProps({ style })} className="drag-n-drop">
       <input {...getInputProps()} />
       {isDragReject
-        ? [<p>Please select an image.</p>]
-        : [<p>Click to select or drag 'n' drop an image</p>]}
+        ? [<p key="error">Please select an image.</p>]
+        : [
+            <p key="default">
+              Click to select or simply drag and drop an image
+            </p>,
+          ]}
     </div>
   );
 }
