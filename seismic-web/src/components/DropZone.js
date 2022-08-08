@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 const focusedStyle = {
@@ -15,6 +15,8 @@ const rejectStyle = {
 
 function ImageDropZone(props) {
   const setCropperVisible = props.setCropperVisible;
+  const images = props.images;
+  const setImages = props.setImages;
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -25,9 +27,17 @@ function ImageDropZone(props) {
       reader.onload = () => {
         // Do whatever you want with the file contents
         const binaryStr = reader.result;
-        console.log(binaryStr);
+        // console.log(binaryStr);
         setCropperVisible(true);
       };
+
+      setImages([
+        ...images,
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        }),
+      ]);
+
       reader.readAsArrayBuffer(file);
     });
   }, []);

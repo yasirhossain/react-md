@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/AdBuilder.scss';
 
 import Cropper from 'react-cropper';
@@ -14,6 +14,12 @@ function AdBuilder() {
   const [cropData, setCropData] = useState('#');
   const [cropper, setCropper] = useState(null);
   const [cropperVisible, setCropperVisible] = useState(false);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    console.log(images);
+    images[0] && setImage(images[0].preview);
+  }, [images]);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -41,11 +47,18 @@ function AdBuilder() {
       <h1>Create a Video Slate</h1>
 
       {!cropperVisible
-        ? [<ImageDropZone key="step-1" setCropperVisible={setCropperVisible} />]
+        ? [
+            <ImageDropZone
+              key="step-1"
+              setCropperVisible={setCropperVisible}
+              images={images}
+              setImages={setImages}
+            />,
+          ]
         : [
             <Cropper
               aspectRatio={16 / 9}
-              style={{ height: 400, width: '100%' }}
+              style={{ height: 600, width: '100%' }}
               zoomTo={0.5}
               initialAspectRatio={1}
               preview=".img-preview"
