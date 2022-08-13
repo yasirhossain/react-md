@@ -6,6 +6,8 @@ import 'cropperjs/dist/cropper.css';
 
 import ImageDropZone from '../components/DropZone';
 
+import Button from '@mui/material/Button';
+
 const defaultSrc =
   'https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg';
 
@@ -17,7 +19,7 @@ function AdBuilder() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    console.log(images);
+    //console.log(images);
     images[0] && setImage(images[0].preview);
   }, [images]);
 
@@ -36,10 +38,56 @@ function AdBuilder() {
     reader.readAsDataURL(files[0]);
   };
 
-  const getCropData = () => {
-    if (typeof cropper !== 'undefined') {
-      setCropData(cropper.getCroppedCanvas().toDataURL());
-    }
+  // Upload cropped image to server if the browser supports `HTMLCanvasElement.toBlob`.
+  // The default value for the second parameter of `toBlob` is 'image/png', change it if necessary.
+  /*
+  cropper.getCroppedCanvas().toBlob((blob) => {
+    const formData = new FormData();
+
+    // Pass the image file name as the third parameter if necessary.
+    formData.append('croppedImage', blob, 'example.png');
+
+    // Use `jQuery.ajax` method for example
+    /*
+    $.ajax('/path/to/upload', {
+      method: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success() {
+        console.log('Upload success');
+      },
+      error() {
+        console.log('Upload error');
+      },
+    });
+  }, 'image/png');
+  */
+
+  const Move = (e) => {
+    e.preventDefault();
+    console.log('move mode');
+    cropper.setDragMode('move');
+  };
+
+  const Crop = (e) => {
+    e.preventDefault();
+    console.log('crop mode');
+    cropper.setDragMode('crop');
+  };
+
+  const Rotate = (val) => {
+    //e.preventDefault();
+    console.log('rotate mode');
+    console.log(val);
+    cropper.rotate(val);
+  };
+
+  const getCropData = (e) => {
+    e.preventDefault();
+    console.log('cropped data');
+    setCropData(cropper.getCroppedCanvas().toDataURL());
+    console.log(cropper.getCroppedCanvas().toDataURL());
   };
 
   return (
@@ -56,26 +104,42 @@ function AdBuilder() {
             />,
           ]
         : [
-            <Cropper
-              aspectRatio={16 / 9}
-              style={{ height: 600, width: '100%' }}
-              zoomTo={0.5}
-              initialAspectRatio={1}
-              preview=".img-preview"
-              src={image}
-              viewMode={1}
-              key="step-2"
-              minCropBoxHeight={10}
-              minCropBoxWidth={10}
-              background={false}
-              responsive={true}
-              autoCropArea={1}
-              checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
-              onInitialized={(instance) => {
-                setCropper(instance);
-              }}
-              guides={true}
-            />,
+            <div className="image-cropper" key="step-2">
+              <Cropper
+                aspectRatio={16 / 9}
+                style={{ height: 600, width: '100%' }}
+                zoomTo={0.5}
+                initialAspectRatio={1}
+                preview=".img-preview"
+                src={image}
+                viewMode={1}
+                minCropBoxHeight={10}
+                minCropBoxWidth={10}
+                background={true}
+                responsive={true}
+                autoCropArea={1}
+                checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+                onInitialized={(instance) => {
+                  setCropper(instance);
+                }}
+                guides={true}
+              />
+              <Button className="btn btn-primary" onClick={Move}>
+                Move
+              </Button>
+              <Button className="btn btn-primary" onClick={Crop}>
+                Crop
+              </Button>
+              <Button className="btn btn-primary" onClick={() => Rotate(-90)}>
+                Rotate Left
+              </Button>
+              <Button className="btn btn-primary" onClick={() => Rotate(90)}>
+                Rotate Right
+              </Button>
+              <Button className="btn btn-primary" onClick={getCropData}>
+                Select
+              </Button>
+            </div>,
           ]}
     </div>
   );
