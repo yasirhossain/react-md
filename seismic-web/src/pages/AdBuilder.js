@@ -13,7 +13,7 @@ const defaultSrc =
 
 function AdBuilder() {
   const [image, setImage] = useState(defaultSrc);
-  const [cropData, setCropData] = useState('#');
+  const [cropData, setCropData] = useState(null);
   const [cropper, setCropper] = useState(null);
   const [cropperVisible, setCropperVisible] = useState(false);
   const [images, setImages] = useState([]);
@@ -86,8 +86,8 @@ function AdBuilder() {
   const getCropData = (e) => {
     e.preventDefault();
     console.log('cropped data');
-    setCropData(cropper.getCroppedCanvas().toDataURL());
-    console.log(cropper.getCroppedCanvas().toDataURL());
+    setImage(cropper.getCroppedCanvas().toDataURL());
+    setCropData(null);
   };
 
   return (
@@ -124,21 +124,44 @@ function AdBuilder() {
                 }}
                 guides={true}
               />
-              <Button className="btn btn-primary" onClick={Move}>
-                Move
-              </Button>
-              <Button className="btn btn-primary" onClick={Crop}>
-                Crop
-              </Button>
-              <Button className="btn btn-primary" onClick={() => Rotate(-90)}>
-                Rotate Left
-              </Button>
-              <Button className="btn btn-primary" onClick={() => Rotate(90)}>
-                Rotate Right
-              </Button>
-              <Button className="btn btn-primary" onClick={getCropData}>
-                Select
-              </Button>
+              <div className="button-container">
+                <div className="left">
+                  <Button className="btn btn-primary" onClick={Move}>
+                    Move
+                  </Button>
+                  <Button className="btn btn-primary" onClick={Crop}>
+                    Crop
+                  </Button>
+                  <Button
+                    className="btn btn-primary"
+                    onClick={() => Rotate(-90)}
+                  >
+                    Rotate Left
+                  </Button>
+                  <Button
+                    className="btn btn-primary"
+                    onClick={() => Rotate(90)}
+                  >
+                    Rotate Right
+                  </Button>
+                </div>
+                <div className="right">
+                  {cropData
+                    ? [
+                        <Button className="btn btn-primary" onClick={Crop}>
+                          Edit
+                        </Button>,
+                      ]
+                    : [
+                        <Button
+                          className="btn btn-primary"
+                          onClick={getCropData}
+                        >
+                          Select
+                        </Button>,
+                      ]}
+                </div>
+              </div>
             </div>,
           ]}
     </div>

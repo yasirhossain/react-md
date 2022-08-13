@@ -38,6 +38,21 @@
       cursor: pointer;
     }
   }
+
+  .image-cropper {
+    .button-container {
+      padding: 0;
+      justify-content: space-between;
+      .left {
+        display: flex;
+        justify-content: flex-start;
+      }
+      .right {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 991px) {
