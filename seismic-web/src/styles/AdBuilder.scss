@@ -1,10 +1,19 @@
 .ad-builder {
   max-width: 1000px;
   width: 100%;
+  position: relative;
+  h1 {
+    margin-block-end: 0em;
+  }
+  h2 {
+    margin-block-start: 0em;
+    font-size: 1.2em;
+    font-weight: 300;
+  }
   .drag-n-drop {
     height: 0;
     overflow: hidden;
-    padding-top: 591.44px / 1127.34px * 100%;
+    padding-top: 591.44px / 1060px * 100%;
     position: relative;
     flex: 1;
     display: flex;
@@ -14,7 +23,7 @@
     border-radius: 2px;
     border-color: #eeeeee;
     border-style: dashed;
-    background-color: #fafafa;
+    // background-color: #fafafa;
     color: #bdbdbd;
     outline: none;
     transition: border 0.24s ease-in-out;
@@ -52,6 +61,13 @@
         justify-content: flex-end;
       }
     }
+  }
+
+  .bg-image {
+    position: absolute;
+    top: 100px;
+    z-index: -1;
+    width: 100%;
   }
 }
 

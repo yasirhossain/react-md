@@ -7,20 +7,25 @@ import 'cropperjs/dist/cropper.css';
 import ImageDropZone from '../components/DropZone';
 
 import Button from '@mui/material/Button';
-
-const defaultSrc =
-  'https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg';
+import { setLogFunction } from '@google-cloud/firestore';
 
 function AdBuilder() {
-  const [image, setImage] = useState(defaultSrc);
+  const [image, setImage] = useState(null);
+  const [originalImage, setOriginalImage] = useState(null);
   const [cropData, setCropData] = useState(null);
   const [cropper, setCropper] = useState(null);
   const [cropperVisible, setCropperVisible] = useState(false);
+  const [imageSelected, setImageSelected] = useState(false);
   const [images, setImages] = useState([]);
+  const [bgImage, setBgImage] = useState(null);
+  const [logo, setLogo] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
     //console.log(images);
-    images[0] && setImage(images[0].preview);
+    images[0] &&
+      setImage(images[0].preview) &&
+      setOriginalImage(images[0].preview);
   }, [images]);
 
   const onChange = (e) => {
@@ -64,6 +69,25 @@ function AdBuilder() {
   }, 'image/png');
   */
 
+  const steps = [
+    {
+      label: 'Step 1: Customize Background',
+      dragMessage: 'Click or simply drag and drop a background image',
+      aspectRatio: 16 / 9,
+    },
+    {
+      label: 'Step 2: Select a Logo',
+      dragMessage: 'Click or simply drag and drop a logo',
+      aspectRatio: 1 / 1,
+    },
+    {
+      label: 'Step 3: Submit for Review',
+    },
+    {
+      label: 'Step 4: Review and Submit Approval',
+    },
+  ];
+
   const Move = (e) => {
     e.preventDefault();
     console.log('move mode');
@@ -87,13 +111,26 @@ function AdBuilder() {
     e.preventDefault();
     console.log('cropped data');
     setImage(cropper.getCroppedCanvas().toDataURL());
+    defineStep(cropper.getCroppedCanvas().toDataURL());
     setCropData(null);
+  };
+
+  const defineStep = (image) => {
+    console.log(image);
+    if (currentStep === 0) {
+      setBgImage(image);
+      setCropperVisible(false);
+    } else if (currentStep === 1) {
+      setLogo(image);
+      setCropperVisible(false);
+    }
+    setCurrentStep(currentStep++);
   };
 
   return (
     <div className="ad-builder">
       <h1>Create a Video Slate</h1>
-
+      <h2>{steps[currentStep].label}</h2>
       {!cropperVisible
         ? [
             <ImageDropZone
@@ -103,67 +140,62 @@ function AdBuilder() {
               setImages={setImages}
             />,
           ]
-        : [
-            <div className="image-cropper" key="step-2">
-              <Cropper
-                aspectRatio={16 / 9}
-                style={{ height: 600, width: '100%' }}
-                zoomTo={0.5}
-                initialAspectRatio={1}
-                preview=".img-preview"
-                src={image}
-                viewMode={1}
-                minCropBoxHeight={10}
-                minCropBoxWidth={10}
-                background={true}
-                responsive={true}
-                autoCropArea={1}
-                checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
-                onInitialized={(instance) => {
-                  setCropper(instance);
-                }}
-                guides={true}
-              />
-              <div className="button-container">
-                <div className="left">
-                  <Button className="btn btn-primary" onClick={Move}>
-                    Move
-                  </Button>
-                  <Button className="btn btn-primary" onClick={Crop}>
-                    Crop
-                  </Button>
-                  <Button
-                    className="btn btn-primary"
-                    onClick={() => Rotate(-90)}
-                  >
-                    Rotate Left
-                  </Button>
-                  <Button
-                    className="btn btn-primary"
-                    onClick={() => Rotate(90)}
-                  >
-                    Rotate Right
-                  </Button>
-                </div>
-                <div className="right">
-                  {cropData
-                    ? [
-                        <Button className="btn btn-primary" onClick={Crop}>
-                          Edit
-                        </Button>,
-                      ]
-                    : [
-                        <Button
-                          className="btn btn-primary"
-                          onClick={getCropData}
-                        >
-                          Select
-                        </Button>,
-                      ]}
-                </div>
-              </div>
-            </div>,
-          ]}
+        : null}
+      {[
+        <div className="image-cropper" key="step-2">
+          <Cropper
+            aspectRatio={steps[currentStep].aspectRatio}
+            style={{ height: 600, width: '100%' }}
+            zoomTo={0.5}
+            initialAspectRatio={1}
+            preview=".img-preview"
+            src={image}
+            viewMode={1}
+            minCropBoxHeight={10}
+            minCropBoxWidth={10}
+            background={true}
+            responsive={true}
+            autoCropArea={1}
+            checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+            onInitialized={(instance) => {
+              setCropper(instance);
+            }}
+            guides={true}
+          />
+          <div className="button-container">
+            <div className="left">
+              <Button className="btn btn-primary" onClick={Move}>
+                Move
+              </Button>
+              <Button className="btn btn-primary" onClick={Crop}>
+                Crop
+              </Button>
+              <Button className="btn btn-primary" onClick={() => Rotate(-90)}>
+                Rotate Left
+              </Button>
+              <Button className="btn btn-primary" onClick={() => Rotate(90)}>
+                Rotate Right
+              </Button>
+            </div>
+            <div className="right">
+              {imageSelected
+                ? [
+                    <Button className="btn btn-primary" onClick={Crop}>
+                      Edit
+                    </Button>,
+                  ]
+                : [
+                    <Button className="btn btn-primary" onClick={getCropData}>
+                      Select
+                    </Button>,
+                  ]}
+            </div>
+          </div>
+        </div>,
+      ]}
+      {currentStep == 1 ? (
+        <img src={bgImage} className="bg-image" alt="background image" />
+      ) : null}
     </div>
   );
 }
