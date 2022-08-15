@@ -25,7 +25,7 @@ function AdBuilder() {
     images[0] &&
       setImage(images[0].preview) &&
       setOriginalImage(images[0].preview);
-  }, [images]);
+  }, [images, currentStep]);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -116,14 +116,16 @@ function AdBuilder() {
 
   const defineStep = (image) => {
     console.log(image);
-    if (currentStep === 0) {
+    if (currentStep == 0) {
       setBgImage(image);
-      setCropperVisible(false);
-    } else if (currentStep === 1) {
-      setLogo(image);
-      setCropperVisible(false);
+      setCropperVisible(true);
+      setCurrentStep(1);
     }
-    setCurrentStep(currentStep++);
+    if (currentStep == 1) {
+      setLogo(image);
+      setCropperVisible(true);
+      setCurrentStep(2);
+    }
   };
 
   return (
