@@ -7,7 +7,6 @@ import 'cropperjs/dist/cropper.css';
 import ImageDropZone from '../components/DropZone';
 
 import Button from '@mui/material/Button';
-import { setLogFunction } from '@google-cloud/firestore';
 
 function AdBuilder() {
   const [image, setImage] = useState(null);
