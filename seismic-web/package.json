@@ -24,7 +24,6 @@
     "html2canvas": "^1.4.1",
     "merge-images": "^2.0.0",
     "moment": "^2.29.3",
-    "momentjs": "^2.0.0",
     "query-string": "^7.1.1",
     "react": "^18.1.0",
     "react-cropper": "^2.1.8",
@@ -33,7 +32,6 @@
     "react-firebase-hooks": "^5.0.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "util": "^0.12.4",
     "uuid": "^8.3.2",
     "video.js": "^7.19.2",
     "videojs-plus": "^1.6.9",
@@ -62,9 +60,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "assert": "^2.0.0",
-    "buffer": "^6.0.3"
   }
 }
